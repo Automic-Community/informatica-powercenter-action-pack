@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="ISO-8859-15" standalone="no"?><uc-export clientvers="11.0.0">
+<VARA OVD_VRName="FREI" data_type="STATIC" name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPT_EXTERNAL_MAP" replacementmode="2">
+<HEADER state="1">
+<Title>External mapping for all the actions</Title>
+<ArchiveKey1/>
+<ArchiveKey2/>
+<OH_SubType>STATIC</OH_SubType>
+</HEADER>
+<ATTR_VARA state="1">
+<Type>C|Text</Type>
+<lblSource>Static</lblSource>
+<source>STATIC</source>
+<VRName>FREI|Freely selected</VRName>
+<NotFoundErr>0</NotFoundErr>
+<NotFoundDef>1</NotFoundDef>
+<ShareN>0</ShareN>
+<ShareL>0</ShareL>
+<ShareR>0</ShareR>
+<MaxValue_C>1024</MaxValue_C>
+<CheckMax_C>0</CheckMax_C>
+<uppercase>0</uppercase>
+<sortColumn>0</sortColumn>
+<sortDirection>0</sortDirection>
+</ATTR_VARA>
+<VARA state="1">
+<Variables>
+<row Name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.ACTION.ADD_OBJECT_INTO_DEPLOYMENT_GROUP/AGENT#" Value="&amp;AGENT#" Value1="" Value2="" Value3="" Value4=""/>
+<row Name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.ACTION.ADD_OBJECT_INTO_DEPLOYMENT_GROUP/LOGIN#" Value="&amp;LOGIN#" Value1="" Value2="" Value3="" Value4=""/>
+<row Name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.ACTION.BACKUP_REPOSITORY/AGENT#" Value="&amp;AGENT#" Value1="" Value2="" Value3="" Value4=""/>
+<row Name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.ACTION.BACKUP_REPOSITORY/LOGIN#" Value="&amp;LOGIN#" Value1="" Value2="" Value3="" Value4=""/>
+<row Name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.ACTION.CREATE_DEPLOYMENT_GROUP/AGENT#" Value="&amp;AGENT#" Value1="" Value2="" Value3="" Value4=""/>
+<row Name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.ACTION.CREATE_DEPLOYMENT_GROUP/LOGIN#" Value="&amp;LOGIN#" Value1="" Value2="" Value3="" Value4=""/>
+<row Name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.ACTION.DELETE_REPOSITORY_CONTENT/AGENT#" Value="&amp;AGENT#" Value1="" Value2="" Value3="" Value4=""/>
+<row Name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.ACTION.DELETE_REPOSITORY_CONTENT/LOGIN#" Value="&amp;LOGIN#" Value1="" Value2="" Value3="" Value4=""/>
+<row Name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.ACTION.DEPLOY_DEPLOYMENT_GROUP/AGENT#" Value="&amp;AGENT#" Value1="" Value2="" Value3="" Value4=""/>
+<row Name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.ACTION.DEPLOY_DEPLOYMENT_GROUP/LOGIN#" Value="&amp;LOGIN#" Value1="" Value2="" Value3="" Value4=""/>
+<row Name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.ACTION.EXECUTE_PMREP_COMMAND/AGENT#" Value="&amp;AGENT#" Value1="" Value2="" Value3="" Value4=""/>
+<row Name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.ACTION.EXECUTE_PMREP_COMMAND/LOGIN#" Value="&amp;LOGIN#" Value1="" Value2="" Value3="" Value4=""/>
+<row Name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.ACTION.EXPORT_OBJECT/AGENT#" Value="&amp;AGENT#" Value1="" Value2="" Value3="" Value4=""/>
+<row Name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.ACTION.EXPORT_OBJECT/LOGIN#" Value="&amp;LOGIN#" Value1="" Value2="" Value3="" Value4=""/>
+<row Name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.ACTION.IMPORT_OBJECT/AGENT#" Value="&amp;AGENT#" Value1="" Value2="" Value3="" Value4=""/>
+<row Name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.ACTION.IMPORT_OBJECT/LOGIN#" Value="&amp;LOGIN#" Value1="" Value2="" Value3="" Value4=""/>
+<row Name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.ACTION.RESTORE_REPOSITORY/AGENT#" Value="&amp;AGENT#" Value1="" Value2="" Value3="" Value4=""/>
+<row Name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.ACTION.RESTORE_REPOSITORY/LOGIN#" Value="&amp;LOGIN#" Value1="" Value2="" Value3="" Value4=""/>
+<row Name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.ACTION.ROLLBACK_DEPLOYMENT/AGENT#" Value="&amp;AGENT#" Value1="" Value2="" Value3="" Value4=""/>
+<row Name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.ACTION.ROLLBACK_DEPLOYMENT/LOGIN#" Value="&amp;LOGIN#" Value1="" Value2="" Value3="" Value4=""/>
+<row Name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.ACTION.VALIDATE_OBJECT/AGENT#" Value="&amp;AGENT#" Value1="" Value2="" Value3="" Value4=""/>
+<row Name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.ACTION.VALIDATE_OBJECT/LOGIN#" Value="&amp;LOGIN#" Value1="" Value2="" Value3="" Value4=""/>
+</Variables>
+</VARA>
+<DOCU_Docu state="1" type="text">
+<DOC/>
+</DOCU_Docu>
+</VARA>
+</uc-export>

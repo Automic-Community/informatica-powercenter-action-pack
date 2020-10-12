@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="ISO-8859-15" standalone="no"?><uc-export clientvers="11.0.0">
+<PRPT name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PRV.PROMPTSET.DELETE_REPOSITORY_CONTENT">
+<HEADER state="1">
+<Title>Delete contents of a repository</Title>
+<ArchiveKey1/>
+<ArchiveKey2/>
+<OH_SubType/>
+</HEADER>
+<PROMPTDESIGNER state="1">
+<DESIGNER/>
+</PROMPTDESIGNER>
+<PROMPTSETXUI state="1">
+<XUIEDITOR><![CDATA[<dialog height="424" icon="PRPT" id="PRPTS" left="0" top="0" width="441"><readpanel fill="b" id="PRPTBOX" nl="1" scroll="v" text="Delete repository content"><properties><entry name="text">Delete repository content</entry><entry name="modifiable">0</entry></properties><dynradiogroup alt="1" enabled="1" fill="b" focus="" id="UC4RB_IPC_FORCE_DELETEs.00" nl="1" text="Force delete" tooltip="Deletes a global repository and unregisters local repositories. All registered local repositories must be running." required="0">
+      <properties>
+        <entry listparam="C,N" name="reference" reftype="STATIC">PCK.ITPA_SHARED.PRV.VARA.YES_NO</entry>
+        <entry name="xmlkey"/>
+        <entry name="xmlpath"/>
+        <entry name="text">Force delete</entry>
+        <entry name="quotes"/>
+        <entry name="id">UC4RB_IPC_FORCE_DELETEs.00</entry>
+        <entry name="enabled">0</entry>
+        <entry name="focus">0</entry>
+        <entry name="tooltip">Deletes a global repository and unregisters local repositories. All registered local repositories must be running.</entry>
+        <entry name="modifiable">1</entry>
+        <entry name="customfield"/>
+      <entry name="initvalue"/>
+         </properties>
+    </dynradiogroup><dynradiogroup alt="1" enabled="1" fill="b" focus="" id="UC4RB_IPC_IGNORE_EMPTYs.00" nl="1" text="Skip if repository is empty" tooltip="If selected yes,Action ends successfully if repository content is already deleted" required="0">
+      <properties>
+        <entry listparam="C,N" name="reference" reftype="STATIC">PCK.ITPA_SHARED.PRV.VARA.YES_NO</entry>
+        <entry name="xmlkey"/>
+        <entry name="xmlpath"/>
+        <entry name="text">Skip if repository is empty</entry>
+        <entry name="quotes"/>
+        <entry name="id">UC4RB_IPC_IGNORE_EMPTYs.00</entry>
+        <entry name="enabled">0</entry>
+        <entry name="focus">0</entry>
+        <entry name="tooltip">If selected yes,Action ends successfully if repository content is already deleted</entry>
+        <entry name="modifiable">1</entry>
+        <entry name="customfield"/>
+      <entry name="initvalue"/>
+         </properties>
+    </dynradiogroup></readpanel></dialog>]]></XUIEDITOR>
+</PROMPTSETXUI>
+<PROMPTSETDATA state="1">
+<DATAEDITOR><![CDATA[<PRPTS ontop="1"><PRPTBOX><UC4RB_IPC_FORCE_DELETEs.00 haslist="0" msgnr="-1" msginsert="" altview="0" promptname="UC4RB_IPC_FORCE_DELETE#" ReadFromTable="OPSE">NO</UC4RB_IPC_FORCE_DELETEs.00><UC4RB_IPC_IGNORE_EMPTYs.00 haslist="0" msgnr="-1" msginsert="" altview="0" promptname="UC4RB_IPC_IGNORE_EMPTY#" ReadFromTable="OPSE">YES</UC4RB_IPC_IGNORE_EMPTYs.00></PRPTBOX></PRPTS>]]></DATAEDITOR>
+</PROMPTSETDATA>
+<DOCU_Docu state="1" type="text">
+<DOC/>
+</DOCU_Docu>
+</PRPT>
+</uc-export>

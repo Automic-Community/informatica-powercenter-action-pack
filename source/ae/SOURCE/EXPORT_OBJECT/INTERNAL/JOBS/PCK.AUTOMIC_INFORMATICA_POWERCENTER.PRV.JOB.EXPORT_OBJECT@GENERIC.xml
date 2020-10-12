@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="ISO-8859-15" standalone="no"?><uc-export clientvers="11.0.0">
+<JOBS_GENERIC AttrType="GENERIC" name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PRV.JOB.EXPORT_OBJECT@GENERIC">
+<XHEADER state="1">
+<Title>Export object</Title>
+<ArchiveKey1/>
+<ArchiveKey2/>
+<Active>1</Active>
+<OH_SubType/>
+<CustomAttributes KeyListID="0" dataRequestID="0"/>
+</XHEADER>
+<OUTPUTREG state="1">
+<FileReg/>
+</OUTPUTREG>
+<SYNCREF state="1">
+<Syncs/>
+</SYNCREF>
+<ATTR_JOBS state="1">
+<Queue>CLIENT_QUEUE</Queue>
+<StartType/>
+<HostDst>|&lt;GENERIC&gt;|HOST</HostDst>
+<HostATTR_Type>GENERIC</HostATTR_Type>
+<CodeName/>
+<Login/>
+<IntAccount/>
+<ExtRepDef>1</ExtRepDef>
+<ExtRepAll>0</ExtRepAll>
+<ExtRepNone>0</ExtRepNone>
+<AutoDeactNo>0</AutoDeactNo>
+<AutoDeact1ErrorFree>0</AutoDeact1ErrorFree>
+<AutoDeactErrorFree>0</AutoDeactErrorFree>
+<DeactWhen/>
+<DeactDelay>0</DeactDelay>
+<AutoDeactAlways>1</AutoDeactAlways>
+<AttDialog>0</AttDialog>
+<ActAtRun>0</ActAtRun>
+<Consumption>0</Consumption>
+<UC4Priority>0</UC4Priority>
+<MaxParallel2>0</MaxParallel2>
+<MpElse1>1</MpElse1>
+<MpElse2>0</MpElse2>
+<TZ/>
+</ATTR_JOBS>
+<RUNTIME state="1">
+<MaxRetCode>0</MaxRetCode>
+<MrcExecute/>
+<MrcElseE>0</MrcElseE>
+<FcstStatus>0| |</FcstStatus>
+
+<ErtMethodDef>1</ErtMethodDef>
+<ErtMethodFix>0</ErtMethodFix>
+<ErtFix>0</ErtFix>
+<ErtDynMethod>2|Average</ErtDynMethod>
+<ErtMethodDyn>0</ErtMethodDyn>
+<ErtCnt>0</ErtCnt>
+<ErtCorr>0</ErtCorr>
+<ErtIgn>0</ErtIgn>
+<ErtIgnFlg>0</ErtIgnFlg>
+<ErtMinCnt>0</ErtMinCnt>
+<MrtMethodNone>1</MrtMethodNone>
+<MrtMethodFix>0</MrtMethodFix>
+<MrtFix>0</MrtFix>
+<MrtMethodErt>0</MrtMethodErt>
+<MrtErt>0</MrtErt>
+<MrtMethodDate>0</MrtMethodDate>
+<MrtDays>0</MrtDays>
+<MrtTime>00:00</MrtTime>
+<MrtTZ/>
+<SrtMethodNone>1</SrtMethodNone>
+<SrtMethodFix>0</SrtMethodFix>
+<SrtFix>0</SrtFix>
+<SrtMethodErt>0</SrtMethodErt>
+<SrtErt>0</SrtErt>
+<MrtCancel>0</MrtCancel>
+<MrtExecute>0</MrtExecute>
+<MrtExecuteObj/>
+</RUNTIME>
+<DYNVALUES state="1">
+<dyntree>
+<node content="1" id="VALUE" name="Variables" parent="" type="VALUE">
+<VALUE state="1">
+<Values/>
+<Mode>0</Mode>
+</VALUE>
+</node>
+</dyntree>
+</DYNVALUES>
+<ROLLBACK state="1">
+<RollbackFlag>0</RollbackFlag>
+<CBackupObj/>
+<CRollbackObj/>
+<FBackupPath/>
+<FDeleteBefore>0</FDeleteBefore>
+<FInclSubDirs>0</FInclSubDirs>
+</ROLLBACK>
+<PRE_SCRIPT mode="1" replacementmode="1" state="1">
+<PSCRI><![CDATA[: IF &UC4RB_IPC_OUTPUT_FILE# <> ""
+: SET &TEMPFILE# = STR_TRIM(&UC4RB_IPC_OUTPUT_FILE#)
+: SET &TEMPFILE# = STR_SUBSTITUTE(&TEMPFILE#, "\", "/")
+: SET &POS# = STR_FIND_REVERSE(&TEMPFILE#, "/")
+
+: IF &POS# GT 0
+:        SET &LEN# = STR_LENGTH(&TEMPFILE#)
+
+:        IF &LEN# EQ &POS#
+:            STOP MSG, 51, "Invalid output file name [&UC4RB_IPC_OUTPUT_FILE#]"
+:        ENDIF
+
+:        SET &POS# = &POS# + 1
+:        SET &FILENAME# = STR_CUT(&TEMPFILE#, &POS#)
+: ELSE
+:        SET &FILENAME# = &TEMPFILE#
+: ENDIF
+
+: SET &CHECK_COLON# = STR_FIND(&FILENAME#, ":")
+: IF &CHECK_COLON# GT 0
+:       STOP MSG, 51, "Invalid output file name [&UC4RB_IPC_OUTPUT_FILE#]"
+: ELSE
+:       SET &CHECK_EXTENSION# = STR_ENDS_WITH(&FILENAME#, ".xml")
+:       IF &CHECK_EXTENSION# EQ "N"
+:            STOP MSG, 51, ".xml Extension is not provided in the filename [&UC4RB_IPC_OUTPUT_FILE#]"
+:       ENDIF
+: ENDIF
+:  ENDIF
+:INC PCK.ITPA_SHARED.PUB.INCLUDE.START_STOP_JOB_ACCORDING_TO_AGENT_OS
+]]></PSCRI>
+</PRE_SCRIPT>
+<SCRIPT mode="1" state="1">
+<MSCRI><![CDATA[:IF &$PLATFORM# EQ "WINDOWS"
+ @echo off
+:ENDIF
+
+: DEFINE &STRING_ARR#, string, 30
+: INC PCK.ITPA_SHARED.PUB.INCLUDE.SUDOERS_HEADER
+
+
+!------------------------------------------ LOGGING INPUT PARAMETERS ------------------------------------------
+: INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.HEADER.PARAM_VALIDATION
+
+: INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.COMMON_LOGGING
+
+! Object Name
+: SET &UC4RB_LOGGING_PARAMETER# = "Object name"
+: SET &UC4RB_LOGGING_PARAMETER_VAL# = "&UC4RB_IPC_OBJ_NAME#"
+: INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.PARAM
+
+
+! Object type
+: SET &UC4RB_LOGGING_PARAMETER# = "Object type"
+: SET &UC4RB_LOGGING_PARAMETER_VAL# = "&UC4RB_IPC_OBJ_TYPE#"
+: INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.PARAM
+
+! Object subtype
+: SET &UC4RB_LOGGING_PARAMETER# = "Object subtype"
+: SET &UC4RB_LOGGING_PARAMETER_VAL# = "&UC4RB_IPC_OBJ_SUBTYPE#"
+: INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.PARAM
+
+! Version number
+: SET &UC4RB_LOGGING_PARAMETER# = "Version number"
+: SET &UC4RB_LOGGING_PARAMETER_VAL# = "&UC4RB_IPC_VERSION_NUMBER#"
+: INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.PARAM
+
+! Folder name
+: SET &UC4RB_LOGGING_PARAMETER# = "Folder name"
+: SET &UC4RB_LOGGING_PARAMETER_VAL# = "&UC4RB_IPC_FOLDER_NAME#"
+: INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.PARAM
+
+! Persistent input file
+: SET &UC4RB_LOGGING_PARAMETER# = "Persistent input file"
+: SET &UC4RB_LOGGING_PARAMETER_VAL# = "&UC4RB_IPC_PERSISTENT_FILE#"
+: INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.PARAM
+
+! Export options
+: SET &UC4RB_LOGGING_PARAMETER# = "Export options"
+: SET &UC4RB_LOGGING_PARAMETER_VAL# = "&UC4RB_IPC_EXP_OPTIONS#"
+: INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.PARAM
+
+
+! XML output file name
+: SET &UC4RB_LOGGING_PARAMETER# = "XML output file name"
+: SET &UC4RB_LOGGING_PARAMETER_VAL# = "&UC4RB_IPC_OUTPUT_FILE#"
+: INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.PARAM
+
+! DBD separator
+: SET &UC4RB_LOGGING_PARAMETER# = "DBD separator"
+: SET &UC4RB_LOGGING_PARAMETER_VAL# = "&UC4RB_IPC_DB_SEPARATOR#"
+: INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.PARAM
+
+! logging start of execution
+: INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.HEADER.EXECUTION
+
+! ------------------------------Validations ------------------------------------
+! Output file
+: SET &AGENT_TEMPDIR# = GET_VAR('UC_EX_PATH_TEMP', &AGENT#)
+: IF &UC4RB_IPC_OUTPUT_FILE# = ""
+:   SET &UC4RB_ESCAPED_STRING# = STR_CAT(&AGENT_TEMPDIR#,'exportobj-&$RUNID#.xml')
+: ELSE
+:   SET &UC4RB_ESCAPED_STRING# = &UC4RB_IPC_OUTPUT_FILE#
+: ENDIF
+:   INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.ESCAPE_ARG_VALUE
+:   SET &TEMPFILE# = &UC4RB_ESCAPED_STRING#
+
+:    SET &UC4RB_LOGGING_ERROR# = "******** Invalid Export Output File Name ********"
+: SWITCH &$PLATFORM#
+:    CASE "WINDOWS"
+         @echo off
+         cd /d "&AGENT_TEMPDIR#"
+         SET ERROR=%ERRORLEVEL%
+:        INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.CHECK_CMD_RETCODE@GENERIC
+         call :getabsolutefile &TEMPFILE#
+         SET ERROR=%ERRORLEVEL%
+:        INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.CHECK_CMD_RETCODE@GENERIC
+         goto :end
+
+         :getabsolutefile
+             IF NOT EXIST "%~dp1" (
+               echo "Invalid directory: %~dp1"
+               EXIT /b 1
+            )
+            SET OUTPUTFILEPATH=%~f1
+            EXIT /b %ERRORLEVEL%
+
+         :end
+:    CASE "UNIX"
+         cd "&AGENT_TEMPDIR#"
+         error=$?
+         if [ $error -ne 0 ]
+             then
+                echo 'Invalid Directory: &AGENT_TEMPDIR#'
+                exit $error
+         fi
+         cd "$(dirname &TEMPFILE#)"
+         error=$?
+         if [ $error -ne 0 ]
+             then
+                echo "Invalid Export File Directory: $(dirname &TEMPFILE#)"
+                exit $error
+         fi
+:        INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.CHECK_CMD_RETCODE@GENERIC
+         outputfilepath="$(pwd -P)/$(basename &TEMPFILE#)"
+:    ENDSWITCH
+
+: INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.EXECUTION_ENVIRONMENT
+
+! ------------------------------------------ CONNECT TO REPOSITORY ---------------------------------------------------------------------
+: INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.LOGIN_REPOSITORY
+
+!------------------------------------------ CREATING EXPORT OBJECT PMREP COMMANDLET ------------------------------------------
+: SET &UC4RB_LOGGING_INFO# = "EXPORT OBJECT CMD EXECUTION"
+: INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.INFO
+
+! prepare command to export object
+: SET &UC4RB_IPC_EXPORT_CMDLET# = "pmrep objectexport"
+
+! Object name
+: IF &UC4RB_IPC_OBJ_NAME# <> ""
+:       SET &UC4RB_ESCAPED_STRING# = &UC4RB_IPC_OBJ_NAME#
+:       INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.ESCAPE_ARG_VALUE
+:       SET &UC4RB_IPC_EXPORT_CMDLET# = STR_CAT(&UC4RB_IPC_EXPORT_CMDLET#, " -n &UC4RB_ESCAPED_STRING#")
+: ENDIF
+
+! Object type
+: IF &UC4RB_IPC_OBJ_TYPE# <> ""
+:       SET &UC4RB_ESCAPED_STRING# = &UC4RB_IPC_OBJ_TYPE#
+:       INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.ESCAPE_ARG_VALUE
+:       SET &UC4RB_IPC_EXPORT_CMDLET# = STR_CAT(&UC4RB_IPC_EXPORT_CMDLET#, " -o &UC4RB_ESCAPED_STRING#")
+: ENDIF
+
+
+! Folder name
+: IF &UC4RB_IPC_FOLDER_NAME# <> ""
+:       SET &UC4RB_ESCAPED_STRING# = &UC4RB_IPC_FOLDER_NAME#
+:       INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.ESCAPE_ARG_VALUE
+:       SET &UC4RB_IPC_EXPORT_CMDLET# = STR_CAT(&UC4RB_IPC_EXPORT_CMDLET#, " -f &UC4RB_ESCAPED_STRING#")
+: ENDIF
+
+
+! Object subtype
+: IF &UC4RB_IPC_OBJ_SUBTYPE# <> ""
+:       SET &UC4RB_ESCAPED_STRING# = &UC4RB_IPC_OBJ_SUBTYPE#
+:       INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.ESCAPE_ARG_VALUE
+:       SET &UC4RB_IPC_EXPORT_CMDLET# = STR_CAT(&UC4RB_IPC_EXPORT_CMDLET#, " -t &UC4RB_ESCAPED_STRING#")
+: ENDIF
+
+! Version number
+: IF &UC4RB_IPC_VERSION_NUMBER# <> ""
+:       SET &UC4RB_ESCAPED_STRING# = &UC4RB_IPC_VERSION_NUMBER#
+:       INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.ESCAPE_ARG_VALUE
+:       SET &UC4RB_IPC_EXPORT_CMDLET# = STR_CAT(&UC4RB_IPC_EXPORT_CMDLET#, " -v &UC4RB_ESCAPED_STRING#")
+: ENDIF
+
+! Persistent file
+: IF &UC4RB_IPC_PERSISTENT_FILE# <> ""
+:       SET &UC4RB_ESCAPED_STRING# = &UC4RB_IPC_PERSISTENT_FILE#
+:       INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.ESCAPE_ARG_VALUE
+:       SET &UC4RB_IPC_EXPORT_CMDLET# = STR_CAT(&UC4RB_IPC_EXPORT_CMDLET#, " -i &UC4RB_ESCAPED_STRING#")
+: ENDIF
+
+
+!Export Options
+:IF &UC4RB_IPC_EXPORT_CMDLET# <> ""
+:   DEFINE &OPTIONS_ARRAY#, string, 4
+:   SET &OPTIONS_VARA# = "PCK.AUTOMIC_INFORMATICA_POWERCENTER.PRV.VARA.EXPORT_OPTIONS"
+:   SET &CHECKBOX_OPTIONS# = &UC4RB_IPC_EXP_OPTIONS#
+:   INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.PREPARE_CHECKBOX_VALUES_AS_ARG
+:   SET &UC4RB_IPC_EXPORT_CMDLET# = STR_CAT(&UC4RB_IPC_EXPORT_CMDLET#, &OPTIONS#)
+:ENDIF
+
+
+
+! DBD separator
+: IF &UC4RB_IPC_DB_SEPARATOR# <> ""
+:       SET &UC4RB_ESCAPED_STRING# = &UC4RB_IPC_DB_SEPARATOR#
+:       INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.ESCAPE_ARG_VALUE
+:       SET &UC4RB_IPC_EXPORT_CMDLET# = STR_CAT(&UC4RB_IPC_EXPORT_CMDLET#, " -e &UC4RB_ESCAPED_STRING#")
+: ENDIF
+
+
+!------------------------------------------ EXECUTING PMREP EXPORT OBJECT COMMANDLETS ---------------------------------------------------------------------
+! LOGGING EXPORT OBJECT COMMAND LINE
+
+: IF &UC4RB_AGENT_OS# = "WINDOWS"
+    echo UC4RB_IPC_EXPORT_FILE::=%OUTPUTFILEPATH%
+:   SET &LOGGING_COMMAND# = '&UC4RB_IPC_EXPORT_CMDLET# -u "%OUTPUTFILEPATH%"'
+:   INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.LOGGING_COMMAND
+    &LOGGING_COMMAND#
+    SET ERROR=%ERRORLEVEL%
+: ELSE
+    echo "UC4RB_IPC_EXPORT_FILE::=$outputfilepath"
+:   SET &LOGGING_COMMAND# = '&UC4RB_IPC_EXPORT_CMDLET# -u "$outputfilepath"'
+:   INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.LOGGING_COMMAND
+    &LOGGING_COMMAND#
+    error=$?
+:ENDIF
+
+!------------------------------------------ DISCONNECTING FROM REPOSITORY ----------------------------------------------------------------
+:INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.PMREP_CLEANUP
+
+!-------------------------------------------ERROR MESSAGE--------------------------------------------------------------------------------
+: SET &UC4RB_LOGGING_ERROR# = "******** EXPORT OBJECT ACTION FAILED ********"
+: INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.CHECK_CMD_RETCODE@GENERIC
+
+!-------------------------------------------SUCCESS MESSAGE-------------------------------------------------------------------------------
+!Status messages
+: SET &UC4RB_LOGGING_INFO# = "******** EXPORT OBJECT ACTION EXECUTED SUCCESSFULLY ********"
+: INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.INFO
+: INC PCK.ITPA_SHARED.PUB.INCLUDE.SUDOERS_FOOTER]]></MSCRI>
+</SCRIPT>
+<OUTPUTSCAN state="1">
+<Inherit>N</Inherit>
+<filterobjects/>
+<HostFsc/>
+<LoginFsc/>
+</OUTPUTSCAN>
+<POST_SCRIPT mode="1" replacementmode="1" state="1">
+<OSCRI><![CDATA[:SET &STATUS# = GET_UC_OBJECT_STATUS(,,"RETCODE")
+
+:IF &STATUS# EQ 0
+:  SET &HND# = PREP_PROCESS_REPORT("JOBS",, "REP",,"COL=DELIMITER", 'DELIMITER=*::=*')
+:  PROCESS &HND#
+:     SET &KEY# = GET_PROCESS_LINE(&HND#,1)
+:     SET &VALUE# = GET_PROCESS_LINE(&HND#,2)
+:     IF &KEY# = "UC4RB_IPC_EXPORT_FILE"
+:         SET &UC4RB_IPC_EXPORT_FILE# = "&VALUE#"
+:         PUBLISH &UC4RB_IPC_EXPORT_FILE#,,"TOP"
+:         TERM_PROCESS
+:     ENDIF
+:   ENDPROCESS
+:   CLOSE_PROCESS &HND#
+:ELSE
+:  SET &UC4RB_IPC_EXPORT_FILE# = ""
+:  PUBLISH &UC4RB_IPC_EXPORT_FILE#,,"TOP"
+:ENDIF]]></OSCRI>
+</POST_SCRIPT>
+<DOCU_Docu state="1" type="text">
+<DOC/>
+</DOCU_Docu>
+</JOBS_GENERIC>
+</uc-export>

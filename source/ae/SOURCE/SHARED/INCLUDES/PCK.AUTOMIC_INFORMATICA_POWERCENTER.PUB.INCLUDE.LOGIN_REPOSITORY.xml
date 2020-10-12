@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="ISO-8859-15" standalone="no"?><uc-export clientvers="11.0.0">
+<JOBI name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.LOGIN_REPOSITORY">
+<HEADER state="1">
+<Title>Prepare and run connection command</Title>
+<ArchiveKey1/>
+<ArchiveKey2/>
+<OH_SubType/>
+</HEADER>
+<SCRIPT mode="1" state="1">
+<MSCRI><![CDATA[: SET &UC4RB_LOGGING_INFO# = "CONNECT CMD EXECUTION"
+: INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.INFO
+
+!----------------------------------- BUILD CONNECT COMMAND -------------------------------------------------
+: SET &UC4RB_IPC_CONNECT_CMDLET# = "pmrep connect"
+!Domain/Hostname
+:IF &UC4RB_IPC_DOMAIN# <> ""
+:   SET &UC4RB_ESCAPED_STRING# = &UC4RB_IPC_DOMAIN#
+:   INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.ESCAPE_ARG_VALUE
+
+:    SWITCH &$PLATFORM#
+:        CASE "WINDOWS"
+       SET INFA_DEFAULT_DOMAIN=&UC4RB_ESCAPED_STRING#
+:        CASE "UNIX"
+                export INFA_DEFAULT_DOMAIN=&UC4RB_ESCAPED_STRING#
+:        OTHER
+:   ENDSWITCH
+:ENDIF
+
+:SET &GATEWAY# = ""
+:IF &UC4RB_IPC_HOSTNAME# <> ""
+:    SET &UC4RB_ESCAPED_STRING# = &UC4RB_IPC_HOSTNAME#
+:    INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.ESCAPE_ARG_VALUE
+:    SET &HOSTNAME# = &UC4RB_ESCAPED_STRING#
+:    SET &GATEWAY# = "-h &HOSTNAME# -o &UC4RB_IPC_PORTNUMBER#"
+:ENDIF
+
+
+! Repository
+: SET &UC4RB_ESCAPED_STRING# = &UC4RB_IPC_REPOSITORY#
+: INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.ESCAPE_ARG_VALUE
+: SET &UC4RB_IPC_CONNECT_CMDLET# = STR_CAT(&UC4RB_IPC_CONNECT_CMDLET#, " -r &UC4RB_ESCAPED_STRING#")
+
+! USERNAME
+: IF &UC4RB_IPC_USERNAME# <> ""
+:   SET &UC4RB_ESCAPED_STRING# = &UC4RB_IPC_USERNAME#
+:   INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.ESCAPE_ARG_VALUE
+:   SET &UC4RB_IPC_CONNECT_CMDLET# = STR_CAT(&UC4RB_IPC_CONNECT_CMDLET#, " -n &UC4RB_ESCAPED_STRING#")
+: ENDIF
+
+! Security domain
+: IF &UC4RB_IPC_SECURITYDOMAIN# <> ""
+:   SET &UC4RB_ESCAPED_STRING# = &UC4RB_IPC_SECURITYDOMAIN#
+:   INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.ESCAPE_ARG_VALUE
+:   SET &UC4RB_IPC_CONNECT_CMDLET# = STR_CAT(&UC4RB_IPC_CONNECT_CMDLET#, " -s &UC4RB_ESCAPED_STRING#")
+: ENDIF
+
+! Target Repository Password environment variable
+: IF &UC4RB_IPC_PSWD_ENV_VAR# <> ""
+:   SET &UC4RB_ESCAPED_STRING# = &UC4RB_IPC_PSWD_ENV_VAR#
+:   INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.ESCAPE_ARG_VALUE
+:   SET &UC4RB_IPC_CONNECT_CMDLET# = STR_CAT(&UC4RB_IPC_CONNECT_CMDLET#, " -X &UC4RB_ESCAPED_STRING#")
+: ENDIF
+
+! Kerberos mode
+: IF &UC4RB_IPC_KERBEROS# EQ "YES"
+:   SET &UC4RB_IPC_CONNECT_CMDLET# = STR_CAT(&UC4RB_IPC_CONNECT_CMDLET#, " -u ")
+: ENDIF
+
+! Decrypt the password
+: SET &TEMPPASSWORD# = ""
+: IF &UC4RB_IPC_PASSWORD# <> ""
+:     INC PCK.ITPA_SHARED.PUB.INCLUDE.ATTACH
+:     SET &UC4RB_ENCRYPTED_PASSWORD_TMP# = "&UC4RB_IPC_PASSWORD#"
+:     INC PCK.ITPA_SHARED.PRV.INCLUDE.DECRYPT_PASSWORD
+:     SWITCH &$PLATFORM#
+:             CASE "WINDOWS"
+:                    SET &TEMPPASSWORD# = STR_CAT(&TEMPPASSWORD#, " -x %UC4_DECRYPTED_PWD%")
+:             CASE "UNIX"
+:                    SET &TEMPPASSWORD# = STR_CAT(&TEMPPASSWORD#, " -x $UC4_DECRYPTED_PWD")
+:             OTHER
+:     ENDSWITCH
+: ENDIF
+
+!----------------------------------- LOG INTO REPOSITORY ------------------------------
+
+: SET &UC4RB_LOGGING_ERROR#="ERROR CONNECTING REPOSITORY &UC4RB_IPC_REPOSITORY#. ACTION EXECUTION HAS FAILED."
+
+: SWITCH &$PLATFORM#
+:     CASE "WINDOWS"
+!             Setlocal EnableDelayedExpansion
+              IF NOT DEFINED INFA_DEFAULT_DOMAIN (
+:                   SET &LOGGING_COMMAND# = "&UC4RB_IPC_CONNECT_CMDLET# &GATEWAY#"
+:                   INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.LOGGING_COMMAND
+                    &UC4RB_IPC_CONNECT_CMDLET# &GATEWAY# &TEMPPASSWORD#
+                      goto :ENDEXECUTION
+              )
+:            IF &UC4RB_IPC_HOSTNAME# <> ""
+                    for /f "tokens=1 delims=" %%i in ('infacmd UpdateGatewayInfo -dg &HOSTNAME#:&UC4RB_IPC_PORTNUMBER# -dn %INFA_DEFAULT_DOMAIN%') do (
+                        SET RESULT=%%i
+                    )
+                    IF "Z%RESULT:Command ran successfully=%" == "Z%RESULT%" (
+                        echo "Unable to update domains.infa file [%RESULT%]"
+                        SET ERRORLEVEL=1
+                     ) ELSE (
+                        echo "Successfully updated domains.infa file"
+                     )
+
+                    SET ERROR=%ERRORLEVEL%
+:                   INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.CHECK_CMD_RETCODE@WINDOWS
+:                   SET &LOGGING_COMMAND# = "&UC4RB_IPC_CONNECT_CMDLET# -d %INFA_DEFAULT_DOMAIN%"
+:                   INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.LOGGING_COMMAND
+                    &UC4RB_IPC_CONNECT_CMDLET# &TEMPPASSWORD# -d %INFA_DEFAULT_DOMAIN%
+:                 ELSE
+:                   SET &LOGGING_COMMAND# = "&UC4RB_IPC_CONNECT_CMDLET# -d %INFA_DEFAULT_DOMAIN%"
+:                   INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.LOGGING_COMMAND
+                    &UC4RB_IPC_CONNECT_CMDLET# &TEMPPASSWORD# -d %INFA_DEFAULT_DOMAIN%
+:            ENDIF
+             :ENDEXECUTION
+             SET ERROR=%ERRORLEVEL%
+:            INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.CHECK_CMD_RETCODE@WINDOWS
+:     CASE "UNIX"
+              if [ "$INFA_DEFAULT_DOMAIN" != "" ]
+              then
+                    if [ "&UC4RB_IPC_HOSTNAME#" != "" ]
+                    then
+                          temp=`infacmd.sh UpdateGatewayInfo -dn "$INFA_DEFAULT_DOMAIN" -dg &HOSTNAME#:&UC4RB_IPC_PORTNUMBER#`
+                          error=$?
+                          if [ "$error" -ne "0" ]
+                          then
+                                echo "Unable to update domains.infa file [$temp]"
+:                               INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.CHECK_CMD_RETCODE@UNIX
+                          else
+                                echo "Successfully updated domains.infa file"
+                          fi
+                    fi
+:                   SET &LOGGING_COMMAND# = "&UC4RB_IPC_CONNECT_CMDLET# -d $INFA_DEFAULT_DOMAIN"
+:                   INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.LOGGING_COMMAND
+                    &UC4RB_IPC_CONNECT_CMDLET# &TEMPPASSWORD# -d "$INFA_DEFAULT_DOMAIN"
+                    error=$?
+              else
+:                   SET &LOGGING_COMMAND# = "&UC4RB_IPC_CONNECT_CMDLET# &GATEWAY#"
+:                   INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.LOGGING_COMMAND
+                    &UC4RB_IPC_CONNECT_CMDLET# &GATEWAY# &TEMPPASSWORD#
+                    error=$?
+              fi
+:             INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.CHECK_CMD_RETCODE@UNIX
+:     OTHER
+:     ENDSWITCH]]></MSCRI>
+</SCRIPT>
+<DOCU_Docu state="1" type="text">
+<DOC><![CDATA[This include does the following:
+* Forms the command to connect to a repository.
+* Execution of the connect command. 
+]]></DOC>
+</DOCU_Docu>
+</JOBI>
+</uc-export>

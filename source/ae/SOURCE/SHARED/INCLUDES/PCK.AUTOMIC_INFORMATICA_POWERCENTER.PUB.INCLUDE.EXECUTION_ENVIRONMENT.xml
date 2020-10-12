@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="ISO-8859-15" standalone="no"?><uc-export clientvers="11.0.0">
+<JOBI name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.EXECUTION_ENVIRONMENT">
+<HEADER state="1">
+<Title>Set informatica environment</Title>
+<ArchiveKey1/>
+<ArchiveKey2/>
+<OH_SubType/>
+</HEADER>
+<SCRIPT mode="1" state="1">
+<MSCRI><![CDATA[! CREATE PATH TO pmrep.cnx FILE
+: SET &AGENT_TEMPDIR# = GET_VAR('UC_EX_PATH_TEMP', &AGENT#)
+: SET &UC4RB_IPC_REPCNXFILE# = STR_CAT(&AGENT_TEMPDIR#,"pmrep_&$RUNID#.cnx")
+
+! PMREP directory
+: SET &UC4RB_ESCAPED_STRING# = &UC4RB_IPC_PMREP_DIR#
+: INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.ESCAPE_ARG_VALUE
+: SET &UC4RB_PMREP# = &UC4RB_ESCAPED_STRING#
+
+! Environment file
+: IF &UC4RB_IPC_ENV_FILE# <> ""
+:   SET &UC4RB_ESCAPED_STRING# = &UC4RB_IPC_ENV_FILE#
+:   INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.ESCAPE_ARG_VALUE
+:   SET &UC4RB_ENV_FILE# = &UC4RB_ESCAPED_STRING#
+: ENDIF
+
+:SWITCH &$PLATFORM#
+! setting environment variables and directory for windows
+:CASE "WINDOWS"
+: IF &UC4RB_IPC_ENV_FILE# <> ""
+     call &UC4RB_ENV_FILE#
+     SET ERROR=%ERRORLEVEL%
+:    SET &UC4RB_LOGGING_ERROR#="Unable to initialize Informatica execution environment."
+:    INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.CHECK_CMD_RETCODE@WINDOWS
+: ENDIF
+  cd /d &UC4RB_PMREP#
+  SET ERROR=%ERRORLEVEL%
+: SET &UC4RB_LOGGING_ERROR# = "INVALID DIRECTORY &UC4RB_PMREP#"
+: INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.CHECK_CMD_RETCODE@WINDOWS
+  SET INFA_REPCNX_INFO=&UC4RB_IPC_REPCNXFILE#
+
+! setting environment variables and directory for unix
+:CASE "UNIX"
+: IF &UC4RB_IPC_ENV_FILE# <> ""
+     . &UC4RB_ENV_FILE#
+     error=$?
+:    SET &UC4RB_LOGGING_ERROR#="Unable to initialize Informatica execution environment."
+:    INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.CHECK_CMD_RETCODE@UNIX
+: ENDIF
+  cd &UC4RB_PMREP#
+  error=$?
+: SET &UC4RB_LOGGING_ERROR# = "INVALID DIRECTORY &UC4RB_PMREP#"
+: INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.CHECK_CMD_RETCODE@UNIX
+export INFA_REPCNX_INFO=&UC4RB_IPC_REPCNXFILE#
+:OTHER
+:ENDSWITCH]]></MSCRI>
+</SCRIPT>
+<DOCU_Docu state="1" type="text">
+<DOC><![CDATA[This include sets the environment variables and change the directory where the pmrep command will be executed. ]]></DOC>
+</DOCU_Docu>
+</JOBI>
+</uc-export>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="ISO-8859-15" standalone="no"?><uc-export clientvers="11.0.0">
+<DOCU name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.DOC">
+<HEADER state="1">
+<Title>Package documentation</Title>
+<ArchiveKey1/>
+<ArchiveKey2/>
+<OH_SubType/>
+</HEADER>
+<DOCU_Docu state="1" type="text">
+<DOC><![CDATA[About Automic's Informatica PowerCenter Package
+================================
+Informatica PowerCenter is one of the Enterprise Data Integration products developed by Informatica Corporation. Informatica PowerCenter is an ETL tool used for extracting data from the source, transforming and loading data in to the target.
+This package provides following functionalities:
+* Deployment Group Management: Create, Add objects, Deploy and Rollback.
+* Validate objects in a Repository.
+* Import and Export of Objects in PowerCenter.
+* Repository Management: Backup, Restore and Delete contents.
+* Execute any other pmrep command.
+
+
+=Supported versions=
+Informatica PowerCenter version 9.0.1, 9.5 and 10.0
+ 
+=Limitations=
+(none)
+
+=Setup=
+* Oracle JDK 1.7 or higher must be installed on Agent OS and "java" must be set as executable on the same.
+
+* The Agent should be able to access the Informatica PowerCenter Repository(s).
+
+* Informatica PowerCenter command line tool version 9.0 or higher must be installed on the Agent OS and set as an executable. Alternatively Agent can also be setup on the same machine where Informatica PowerCenter server is installed.
+
+* PowerCenter command line tool must be compatible with Informatica PowerCenter Server. E.g. If PowerCenter command line tool is 9.5 and Informatica PowerCenter Server is 10.0. Then it will not work.
+
+* You should have connection details to connect to Informatica PowerCenter server.
+
+* Locate the direcotry where pmrep is located. Usually, it can be located in the following directories depends on the installation mode. 
+<Informatica installation directory>/server/bin
+<Informatica installation directory>/clients/PowerCenterClient/CommandLineUtilities/PC/server/bin
+<Utilities installation directory>/PowerCenter/server/bin
+Subsequently, you need this directory for providing input to the actions.
+
+* Create/Update the Domains.infa file.
+The domains.infa file contains the gateway connectivity information for the domain. This file is located under <pmrep file path>/../.. directory.
+Run the following command to update the Domains.infa file.
+1. switch the working directory to <pmrep file path>.
+2. Run the command "infacmd isp UpdateGatewayInfo -dn <domain name> -dg <domain_gateway_host:port>"
+       For UNIX, it can be "./infacmd.sh isp UpdateGatewayInfo -dn <domain name> -dg <domain_gateway_host:port>"
+   Where Domain name must match with the Informatica PowerCenter domain name. 
+
+* Setup the Environment variable(s) into batch/cmd or sh file if required. Subsequently, you need this file for providing input to the actions.
+  For Windows, you can define it SET <variable name>=<variable value>
+  For UNIX, you define it export <variable name>=<variable value>
+  Make sure this file should be set as executable.
+
+  If you are running the actions on UNIX, please make sure that following environment variable(s) exist.
+     LD_LIBRARY_PATH  : This should be set as directory where pmrep is located. E.g. export LD_LIBRARY_PATH=/home/ae/Informatica/PowerCenter/server/bin
+     PATH             : Set the path. E.g. export PATH=/home/ae/Informatica/PowerCenter/server/bin:$PATH
+     LC_ALL           : Set the locale. E.g. export LC_ALL=en_US
+
+Following are some common use case(s) where we might need to set the environment variables.
+   
+  a) To define default domain
+         Windows : SET INFA_DEFAULT_DOMAIN=Domain_InformaticaPCDomain
+         UNIX    : export INFA_DEFAULT_DOMAIN=Domain_InformaticaPCDomain   
+     You can define the domain in the environment file or provide it as one of the action input. If you provide at both places, action input will be given as precedence.
+     If you provide both domain and host information to the action. It will update the gateway information in the domains.infa as well.
+     Recommended way is to just provide the domain. Specify the host name and port if gateway informaion is out of date.
+    
+  b) If the Informatica domain has secure communication enabled, you must set environment variables on the machine that hosts the command line programs to run the commands securely. 
+     You must set the environment variables before you run the actions.
+     
+     Set the following environment variables before you run the commands:
+     INFA_TRUSTSTORE : Set the INFA_TRUSTSTORE environment variable with the directory that contains the truststore files for the SSL certificates. The directory must contain truststore files named infa_truststore.jks and infa_truststore.pem. You must set the INFA_TRUSTSTORE variable whether you use the default SSL certificate from Informatica or you specify a SSL certificate.
+     INFA_TRUSTSTORE_PASSWORD : If you specify the SSL certificate to enable secure communication in the domain, set the INFA_TRUSTSTORE_PASSWORD environment variable with the password for the infa_truststore.jks that contains the SSL certificate. You do not need to set this variable if you use the default SSL certificate from Informatica.Note: The password must be encrypted. 
+
+  c) If the Informatica domain uses Kerberos authentication, set the Kerberos configuration environment variable before you run the actions.
+     KRB5CCNAME  : Stores the default path and filename for the Kerberos credentials cache.
+     KRB5_CONFIG : Stores the path and file name of the Kerberos configuration file.
+
+  d) To define connection timeout
+INFA_CLIENT_RESILIENCE_TIMEOUT : Sets this environment variable to limit the number of seconds the command line programs spend establishing connections to the domain or service. The default time is 180 seconds if you do not set this environment variable. 
+
+  e) To define INFA_HOME
+INFA_HOME : Sets this environment varible to the directory where you have installed Informatica PowerCenter. If this variable is defined, domains.infa file will be create or updated in this directory.
+     
+For more information on environment variable(s), please consult the Informatica PowerCenter command line documentation.
+
+=Actions=
+
+Following actions are supported:
+
+* Action Name: PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.ACTION.CREATE_DEPLOYMENT_GROUP
+* Action Description: This action is used to create a Deployment group in a PowerCenter repository.
+
+* Action Name: PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.ACTION.ADD_OBJECT_INTO_DEPLOYMENT_GROUP
+* Action Description: This action add objects into deployment group.
+
+* Action Name: PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.ACTION.DEPLOY_DEPLOYMENT_GROUP
+* Action Description: This action is used to copy a deployment group within a repository or to a different repository. 
+
+* Action name: PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.ACTION.ROLLBACK_DEPLOYMENT
+* Action Description: This action is used to roll back a deployment to purge a deployed version from the target repository or folder and revert objects to a previous version of deployment.
+
+* Action name: PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.ACTION.IMPORT_OBJECT
+* Action Description: This action imports object(s) from an XML file using the control file.
+
+* Action Name: PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.ACTION.EXPORT_OBJECT
+* Action Description: This action is used export the objects from the informatica repository.
+
+* Action name: PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.ACTION.VALIDATE_OBJECT
+* Action Description: This action is used to validate object(s) in the given repository.
+
+* Action name: PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.ACTION.EXECUTE_PMREP_COMMAND
+* Action Description: This action is used to execute ad-hoc pmrep command. 
+
+* Action name: PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.ACTION.BACKUP_REPOSITORY
+* Action Description: This action is used to backup repository to the specified directory.
+
+* Action name: PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.ACTION.DELETE_REPOSITORY_CONTENT
+* Action Description: This action is used to delete the contents of a repository.
+
+* Action name: PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.ACTION.RESTORE_REPOSITORY
+* Action Description: This action is used to restore a repository to the specified content from a backup file.]]></DOC>
+</DOCU_Docu>
+</DOCU>
+</uc-export>

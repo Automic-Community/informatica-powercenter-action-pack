@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="ISO-8859-15" standalone="no"?><uc-export clientvers="11.0.0">
+<JOBP AllowExternal="1" name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.ACTION.ROLLBACK_DEPLOYMENT">
+<XHEADER state="1">
+<Title>Rollback deployment</Title>
+<ArchiveKey1/>
+<ArchiveKey2/>
+<Active>1</Active>
+<OH_SubType/>
+<CustomAttributes KeyListID="0" dataRequestID="0"/>
+</XHEADER>
+<SYNCREF state="1">
+<Syncs/>
+</SYNCREF>
+<ATTR_JOBP state="1">
+<Queue>CLIENT_QUEUE</Queue>
+<ChildQueue/>
+<StartType/>
+<ExtRepDef>1</ExtRepDef>
+<ExtRepAll>0</ExtRepAll>
+<ExtRepNone>0</ExtRepNone>
+<IntAccount/>
+<AutoDeactNo>0</AutoDeactNo>
+<AutoDeact1ErrorFree>0</AutoDeact1ErrorFree>
+<AutoDeactErrorFree>1</AutoDeactErrorFree>
+<DeactWhen>ANY_OK</DeactWhen>
+<AutoDeactAlways>0</AutoDeactAlways>
+<DeactDelay>0</DeactDelay>
+<ActAtRun>1</ActAtRun>
+<UC4Priority>0</UC4Priority>
+<MaxParallel2>0</MaxParallel2>
+<ReuseHG>1</ReuseHG>
+<MpElse1>1</MpElse1>
+<MpElse2>0</MpElse2>
+<TZ/>
+<RWhen/>
+<RExecute/>
+<JPA_SubType/>
+</ATTR_JOBP>
+<JOBP state="1">
+<JobpStruct mode="design">
+<task Alias="" BranchType="0" Col="1" Lnr="1" OType="&lt;START&gt;" Object="START" ParentAlias="" ParentObject="" Row="1" Text2="">
+<checkpoint RollbackFlag="0" RunPerPatch="0" RunPerTarget="0" TcpADays="0" TcpATime="00:00" TcpATimeTZ="" TcpExecute="" TcpOn="0" promptatgen="0" showprompt="0"/>
+<after ActFlg="1" AtimOn="0" ErlstStDays="0" ErlstStTime="00:00" ErlstStTimeTZ="" HoldFlg="0"/>
+<when ChkWhenExec="0" LtstEnd="0" LtstEndDays="0" LtstEndTime="00:00" LtstSt="0" LtstStDays="0" LtstStTime="00:00" LtstTimeTZ="" WCTypeAND="1" WCTypeOR="0" WElseA="0" WElseH="0" WElseS="1" WElseX="0" WhenExecute="" WtimOn="0"/>
+<preconditions>
+<PreCon>
+<conditions id="CONDITIONS"/>
+</PreCon>
+</preconditions>
+<predecessors/>
+<runtime MrtCancel="0" MrtDays="0" MrtErt="0" MrtExecute="0" MrtExecuteObj="" MrtFix="0" MrtMethodDate="0" MrtMethodErt="0" MrtMethodFix="0" MrtMethodNone="1" MrtOn="1" MrtTZ="" MrtTime="00:00" SrtErt="0" SrtFix="0" SrtMethodErt="0" SrtMethodFix="0" SrtMethodNone="1"/>
+<result ChkRExec="0" RElseHalt="0" RElseIgn="0" RElseJPAbend="0" RExecFlag="0" RExecute="" RRepMTimes="0" RRepOn="0" RRepWait="0" RWhen=""/>
+<dynvalues>
+<dyntree>
+<node content="1" id="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPTSET.CONNECTION_DETAILS" name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPTSET.CONNECTION_DETAILS" parent="PPRPTS" type="PPROMPTSET">
+<PROMPTSET name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPTSET.CONNECTION_DETAILS">
+<PRPTBOX promptset="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPTSET.CONNECTION_DETAILS">
+<UC4RB_IPC_DOMAINs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_IPC_DOMAIN#" promptsetname="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPTSET.CONNECTION_DETAILS"/>
+<UC4RB_IPC_ENV_FILEs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_IPC_ENV_FILE#" promptsetname="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPTSET.CONNECTION_DETAILS"/>
+<UC4RB_IPC_HOSTNAMEs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_IPC_HOSTNAME#" promptsetname="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPTSET.CONNECTION_DETAILS"/>
+<UC4RB_IPC_KERBEROSs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_IPC_KERBEROS#" promptsetname="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPTSET.CONNECTION_DETAILS">NO</UC4RB_IPC_KERBEROSs.00>
+<UC4RB_IPC_PASSWORDs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_IPC_PASSWORD#" promptsetname="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPTSET.CONNECTION_DETAILS"/>
+<UC4RB_IPC_PMREP_DIRs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_IPC_PMREP_DIR#" promptsetname="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPTSET.CONNECTION_DETAILS"/>
+<UC4RB_IPC_PORTNUMBERs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_IPC_PORTNUMBER#" promptsetname="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPTSET.CONNECTION_DETAILS">6005</UC4RB_IPC_PORTNUMBERs.00>
+<UC4RB_IPC_PSWD_ENV_VARs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_IPC_PSWD_ENV_VAR#" promptsetname="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPTSET.CONNECTION_DETAILS"/>
+<UC4RB_IPC_REPOSITORYs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_IPC_REPOSITORY#" promptsetname="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPTSET.CONNECTION_DETAILS"/>
+<UC4RB_IPC_SECURITYDOMAINs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_IPC_SECURITYDOMAIN#" promptsetname="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPTSET.CONNECTION_DETAILS">Native</UC4RB_IPC_SECURITYDOMAINs.00>
+<UC4RB_IPC_USERNAMEs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_IPC_USERNAME#" promptsetname="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPTSET.CONNECTION_DETAILS"/>
+</PRPTBOX>
+</PROMPTSET>
+</node>
+<node content="1" id="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PRV.PROMPTSET.ROLLBACK_DEPLOYMENT" name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PRV.PROMPTSET.ROLLBACK_DEPLOYMENT" parent="PPRPTS" type="PPROMPTSET">
+<PROMPTSET name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PRV.PROMPTSET.ROLLBACK_DEPLOYMENT">
+<PRPTBOX promptset="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PRV.PROMPTSET.ROLLBACK_DEPLOYMENT">
+<UC4RB_IPC_DEPLOY_VERSIONs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_IPC_DEPLOY_VERSION#" promptsetname="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PRV.PROMPTSET.ROLLBACK_DEPLOYMENT">1</UC4RB_IPC_DEPLOY_VERSIONs.00>
+<UC4RB_IPC_DEPLOYGROUPs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_IPC_DEPLOYGROUP#" promptsetname="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PRV.PROMPTSET.ROLLBACK_DEPLOYMENT"/>
+<UC4RB_IPC_GROUP_VERSIONs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_IPC_GROUP_VERSION#" promptsetname="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PRV.PROMPTSET.ROLLBACK_DEPLOYMENT">-1</UC4RB_IPC_GROUP_VERSIONs.00>
+<UC4RB_IPC_SKIP_ROLLEDBACKs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_IPC_SKIP_ROLLEDBACK#" promptsetname="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PRV.PROMPTSET.ROLLBACK_DEPLOYMENT">NO</UC4RB_IPC_SKIP_ROLLEDBACKs.00>
+<UC4RB_IPC_SRC_REPOSITORYs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_IPC_SRC_REPOSITORY#" promptsetname="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PRV.PROMPTSET.ROLLBACK_DEPLOYMENT"/>
+</PRPTBOX>
+</PROMPTSET>
+</node>
+<node content="1" id="PCK.ITPA_SHARED.PUB.PROMPTSET.SUDO" name="PCK.ITPA_SHARED.PUB.PROMPTSET.SUDO" parent="PPRPTS" type="PPROMPTSET">
+<PROMPTSET name="PCK.ITPA_SHARED.PUB.PROMPTSET.SUDO">
+<PRPTBOX promptset="PCK.ITPA_SHARED.PUB.PROMPTSET.SUDO">
+<UC4RB_SUDO_PASSWORDs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_SUDO_PASSWORD#" promptsetname="PCK.ITPA_SHARED.PUB.PROMPTSET.SUDO"/>
+<UC4RB_SUDO_USERs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_SUDO_USER#" promptsetname="PCK.ITPA_SHARED.PUB.PROMPTSET.SUDO"/>
+<UC4RB_USE_SUDOs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_USE_SUDO#" promptsetname="PCK.ITPA_SHARED.PUB.PROMPTSET.SUDO">None</UC4RB_USE_SUDOs.00>
+</PRPTBOX>
+</PROMPTSET>
+</node>
+<node content="1" id="PCK.ITPA_SHARED.PRV.PROMPTSET.OVERWRITE_AGENT" name="PCK.ITPA_SHARED.PRV.PROMPTSET.OVERWRITE_AGENT" parent="PPRPTS" type="PPROMPTSET">
+<PROMPTSET name="PCK.ITPA_SHARED.PRV.PROMPTSET.OVERWRITE_AGENT">
+<PRPTBOX promptset="PCK.ITPA_SHARED.PRV.PROMPTSET.OVERWRITE_AGENT">
+<AGENTs.00 ReadFromTable="OPUD" altview="1" haslist="0" msginsert="" msgnr="" promptname="AGENT#" promptsetname="PCK.ITPA_SHARED.PRV.PROMPTSET.OVERWRITE_AGENT">&amp;AGENT#</AGENTs.00>
+<LOGINs.00 ReadFromTable="OPUD" altview="1" haslist="0" msginsert="" msgnr="" promptname="LOGIN#" promptsetname="PCK.ITPA_SHARED.PRV.PROMPTSET.OVERWRITE_AGENT">&amp;LOGIN#</LOGINs.00>
+</PRPTBOX>
+</PROMPTSET>
+</node>
+</dyntree>
+</dynvalues>
+<CIT/>
+<calendars CCTypeAll="0" CCTypeExt="0" CCTypeNone="0" CCTypeOne="1" CaleOn="0"/>
+<postconditions>
+<PostCon>
+<conditions id="CONDITIONS"/>
+</PostCon>
+</postconditions>
+</task>
+<task Alias="ROLLBACK_DEPLOYMENT" BranchType="0" Col="2" Lnr="2" OType="JOBS" Object="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PRV.JOB.ROLLBACK_DEPLOYMENT@GENERIC" ParentAlias="" ParentObject="" Row="1" Text2="">
+<checkpoint RollbackFlag="1" RunPerPatch="0" RunPerTarget="0" TcpADays="0" TcpATime="00:00" TcpATimeTZ="" TcpExecute="" TcpOn="0" promptatgen="0" showprompt="0"/>
+<after ActFlg="1" AtimOn="0" ErlstStDays="0" ErlstStTime="00:00" ErlstStTimeTZ="" HoldFlg="0"/>
+<when ChkWhenExec="0" LtstEnd="0" LtstEndDays="0" LtstEndTime="00:00" LtstSt="0" LtstStDays="0" LtstStTime="00:00" LtstTimeTZ="" WCTypeAND="1" WCTypeOR="0" WElseA="1" WElseH="0" WElseS="0" WElseX="0" WhenExecute="" WtimOn="0"/>
+<preconditions>
+<PreCon>
+<conditions id="CONDITIONS"/>
+</PreCon>
+</preconditions>
+<predecessors>
+<pre BranchType="0" Lnr="1" PreLnr="1" When="ANY_OK" type="container"/>
+</predecessors>
+<runtime MrtCancel="0" MrtDays="0" MrtErt="0" MrtExecute="0" MrtExecuteObj="" MrtFix="0" MrtMethodDate="0" MrtMethodErt="0" MrtMethodFix="0" MrtMethodNone="1" MrtOn="1" MrtTZ="" MrtTime="00:00" SrtErt="0" SrtFix="0" SrtMethodErt="0" SrtMethodFix="0" SrtMethodNone="1"/>
+<result ChkRExec="0" RElseHalt="1" RElseIgn="0" RElseJPAbend="0" RExecFlag="0" RExecute="" RRepMTimes="0" RRepOn="0" RRepWait="0" RWhen=""/>
+<dynvalues>
+<dyntree>
+<node content="1" id="VALUE" name="Variables" parent="" type="TASKVALUE">
+<VALUE state="2">
+<Values/>
+<Mode>0</Mode>
+</VALUE>
+</node>
+<node content="1" id="PVALUE" name="Parent Variables" parent="" type="TASKVALUE">
+<VALUE state="2">
+<Values/>
+<Mode>0</Mode>
+</VALUE>
+</node>
+<node content="1" id="PRPTS" name="PromptSets" parent="" pref="1" type="PROMPTSET"/>
+<node content="0" id="PPRPTS" name="Parent PromptSets" parent="" type="PPROMPTSET"/>
+<node content="1" id="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPTSET.CONNECTION_DETAILS" name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPTSET.CONNECTION_DETAILS" parent="PPRPTS" type="PPROMPTSET">
+<PROMPTSET name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPTSET.CONNECTION_DETAILS">
+<PRPTBOX promptset="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPTSET.CONNECTION_DETAILS">
+<UC4RB_IPC_DOMAINs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_IPC_DOMAIN#" promptsetname="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPTSET.CONNECTION_DETAILS"/>
+<UC4RB_IPC_ENV_FILEs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_IPC_ENV_FILE#" promptsetname="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPTSET.CONNECTION_DETAILS"/>
+<UC4RB_IPC_HOSTNAMEs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_IPC_HOSTNAME#" promptsetname="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPTSET.CONNECTION_DETAILS"/>
+<UC4RB_IPC_KERBEROSs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_IPC_KERBEROS#" promptsetname="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPTSET.CONNECTION_DETAILS">NO</UC4RB_IPC_KERBEROSs.00>
+<UC4RB_IPC_PASSWORDs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_IPC_PASSWORD#" promptsetname="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPTSET.CONNECTION_DETAILS"/>
+<UC4RB_IPC_PMREP_DIRs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_IPC_PMREP_DIR#" promptsetname="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPTSET.CONNECTION_DETAILS"/>
+<UC4RB_IPC_PORTNUMBERs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_IPC_PORTNUMBER#" promptsetname="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPTSET.CONNECTION_DETAILS">6005</UC4RB_IPC_PORTNUMBERs.00>
+<UC4RB_IPC_PSWD_ENV_VARs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_IPC_PSWD_ENV_VAR#" promptsetname="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPTSET.CONNECTION_DETAILS"/>
+<UC4RB_IPC_REPOSITORYs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_IPC_REPOSITORY#" promptsetname="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPTSET.CONNECTION_DETAILS"/>
+<UC4RB_IPC_SECURITYDOMAINs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_IPC_SECURITYDOMAIN#" promptsetname="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPTSET.CONNECTION_DETAILS">Native</UC4RB_IPC_SECURITYDOMAINs.00>
+<UC4RB_IPC_USERNAMEs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_IPC_USERNAME#" promptsetname="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPTSET.CONNECTION_DETAILS"/>
+</PRPTBOX>
+</PROMPTSET>
+</node>
+<node content="1" id="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PRV.PROMPTSET.ROLLBACK_DEPLOYMENT" name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PRV.PROMPTSET.ROLLBACK_DEPLOYMENT" parent="PPRPTS" type="PPROMPTSET">
+<PROMPTSET name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PRV.PROMPTSET.ROLLBACK_DEPLOYMENT">
+<PRPTBOX promptset="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PRV.PROMPTSET.ROLLBACK_DEPLOYMENT">
+<UC4RB_IPC_DEPLOY_VERSIONs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_IPC_DEPLOY_VERSION#" promptsetname="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PRV.PROMPTSET.ROLLBACK_DEPLOYMENT">1</UC4RB_IPC_DEPLOY_VERSIONs.00>
+<UC4RB_IPC_DEPLOYGROUPs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_IPC_DEPLOYGROUP#" promptsetname="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PRV.PROMPTSET.ROLLBACK_DEPLOYMENT"/>
+<UC4RB_IPC_GROUP_VERSIONs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_IPC_GROUP_VERSION#" promptsetname="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PRV.PROMPTSET.ROLLBACK_DEPLOYMENT">-1</UC4RB_IPC_GROUP_VERSIONs.00>
+<UC4RB_IPC_SKIP_ROLLEDBACKs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_IPC_SKIP_ROLLEDBACK#" promptsetname="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PRV.PROMPTSET.ROLLBACK_DEPLOYMENT">NO</UC4RB_IPC_SKIP_ROLLEDBACKs.00>
+<UC4RB_IPC_SRC_REPOSITORYs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_IPC_SRC_REPOSITORY#" promptsetname="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PRV.PROMPTSET.ROLLBACK_DEPLOYMENT"/>
+</PRPTBOX>
+</PROMPTSET>
+</node>
+<node content="1" id="PCK.ITPA_SHARED.PUB.PROMPTSET.SUDO" name="PCK.ITPA_SHARED.PUB.PROMPTSET.SUDO" parent="PPRPTS" type="PPROMPTSET">
+<PROMPTSET name="PCK.ITPA_SHARED.PUB.PROMPTSET.SUDO">
+<PRPTBOX promptset="PCK.ITPA_SHARED.PUB.PROMPTSET.SUDO">
+<UC4RB_SUDO_PASSWORDs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_SUDO_PASSWORD#" promptsetname="PCK.ITPA_SHARED.PUB.PROMPTSET.SUDO"/>
+<UC4RB_SUDO_USERs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_SUDO_USER#" promptsetname="PCK.ITPA_SHARED.PUB.PROMPTSET.SUDO"/>
+<UC4RB_USE_SUDOs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_USE_SUDO#" promptsetname="PCK.ITPA_SHARED.PUB.PROMPTSET.SUDO">None</UC4RB_USE_SUDOs.00>
+</PRPTBOX>
+</PROMPTSET>
+</node>
+<node content="1" id="PCK.ITPA_SHARED.PRV.PROMPTSET.OVERWRITE_AGENT" name="PCK.ITPA_SHARED.PRV.PROMPTSET.OVERWRITE_AGENT" parent="PPRPTS" type="PPROMPTSET">
+<PROMPTSET name="PCK.ITPA_SHARED.PRV.PROMPTSET.OVERWRITE_AGENT">
+<PRPTBOX promptset="PCK.ITPA_SHARED.PRV.PROMPTSET.OVERWRITE_AGENT">
+<AGENTs.00 ReadFromTable="OPUD" altview="1" haslist="0" msginsert="" msgnr="" promptname="AGENT#" promptsetname="PCK.ITPA_SHARED.PRV.PROMPTSET.OVERWRITE_AGENT">&amp;AGENT#</AGENTs.00>
+<LOGINs.00 ReadFromTable="OPUD" altview="1" haslist="0" msginsert="" msgnr="" promptname="LOGIN#" promptsetname="PCK.ITPA_SHARED.PRV.PROMPTSET.OVERWRITE_AGENT">&amp;LOGIN#</LOGINs.00>
+</PRPTBOX>
+</PROMPTSET>
+</node>
+</dyntree>
+</dynvalues>
+<CIT/>
+<calendars CCTypeAll="0" CCTypeExt="0" CCTypeNone="0" CCTypeOne="1" CaleOn="0"/>
+<postconditions>
+<PostCon>
+<conditions id="CONDITIONS"/>
+</PostCon>
+</postconditions>
+</task>
+<task Alias="" BranchType="0" Col="3" Lnr="3" OType="&lt;END&gt;" Object="END" ParentAlias="" ParentObject="" Row="1" Text2="">
+<checkpoint RollbackFlag="0" RunPerPatch="0" RunPerTarget="0" TcpADays="0" TcpATime="00:00" TcpATimeTZ="" TcpExecute="" TcpOn="0" promptatgen="0" showprompt="0"/>
+<after ActFlg="1" AtimOn="0" ErlstStDays="0" ErlstStTime="00:00" ErlstStTimeTZ="" HoldFlg="0"/>
+<when ChkWhenExec="0" LtstEnd="0" LtstEndDays="0" LtstEndTime="00:00" LtstSt="0" LtstStDays="0" LtstStTime="00:00" LtstTimeTZ="" WCTypeAND="1" WCTypeOR="0" WElseA="1" WElseH="0" WElseS="0" WElseX="0" WhenExecute="" WtimOn="0"/>
+<preconditions>
+<PreCon>
+<conditions id="CONDITIONS"/>
+</PreCon>
+</preconditions>
+<predecessors>
+<pre BranchType="0" Lnr="1" PreLnr="2" When="ANY_OK" type="container"/>
+</predecessors>
+<runtime MrtCancel="0" MrtDays="0" MrtErt="0" MrtExecute="0" MrtExecuteObj="" MrtFix="0" MrtMethodDate="0" MrtMethodErt="0" MrtMethodFix="0" MrtMethodNone="1" MrtOn="1" MrtTZ="" MrtTime="00:00" SrtErt="0" SrtFix="0" SrtMethodErt="0" SrtMethodFix="0" SrtMethodNone="1"/>
+<result ChkRExec="0" RElseHalt="0" RElseIgn="0" RElseJPAbend="0" RExecFlag="0" RExecute="" RRepMTimes="0" RRepOn="0" RRepWait="0" RWhen=""/>
+<dynvalues>
+<dyntree>
+<node content="1" id="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPTSET.CONNECTION_DETAILS" name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPTSET.CONNECTION_DETAILS" parent="PPRPTS" type="PPROMPTSET">
+<PROMPTSET name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPTSET.CONNECTION_DETAILS">
+<PRPTBOX promptset="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPTSET.CONNECTION_DETAILS">
+<UC4RB_IPC_DOMAINs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_IPC_DOMAIN#" promptsetname="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPTSET.CONNECTION_DETAILS"/>
+<UC4RB_IPC_ENV_FILEs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_IPC_ENV_FILE#" promptsetname="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPTSET.CONNECTION_DETAILS"/>
+<UC4RB_IPC_HOSTNAMEs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_IPC_HOSTNAME#" promptsetname="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPTSET.CONNECTION_DETAILS"/>
+<UC4RB_IPC_KERBEROSs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_IPC_KERBEROS#" promptsetname="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPTSET.CONNECTION_DETAILS">NO</UC4RB_IPC_KERBEROSs.00>
+<UC4RB_IPC_PASSWORDs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_IPC_PASSWORD#" promptsetname="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPTSET.CONNECTION_DETAILS"/>
+<UC4RB_IPC_PMREP_DIRs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_IPC_PMREP_DIR#" promptsetname="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPTSET.CONNECTION_DETAILS"/>
+<UC4RB_IPC_PORTNUMBERs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_IPC_PORTNUMBER#" promptsetname="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPTSET.CONNECTION_DETAILS">6005</UC4RB_IPC_PORTNUMBERs.00>
+<UC4RB_IPC_PSWD_ENV_VARs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_IPC_PSWD_ENV_VAR#" promptsetname="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPTSET.CONNECTION_DETAILS"/>
+<UC4RB_IPC_REPOSITORYs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_IPC_REPOSITORY#" promptsetname="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPTSET.CONNECTION_DETAILS"/>
+<UC4RB_IPC_SECURITYDOMAINs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_IPC_SECURITYDOMAIN#" promptsetname="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPTSET.CONNECTION_DETAILS">Native</UC4RB_IPC_SECURITYDOMAINs.00>
+<UC4RB_IPC_USERNAMEs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_IPC_USERNAME#" promptsetname="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPTSET.CONNECTION_DETAILS"/>
+</PRPTBOX>
+</PROMPTSET>
+</node>
+<node content="1" id="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PRV.PROMPTSET.ROLLBACK_DEPLOYMENT" name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PRV.PROMPTSET.ROLLBACK_DEPLOYMENT" parent="PPRPTS" type="PPROMPTSET">
+<PROMPTSET name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PRV.PROMPTSET.ROLLBACK_DEPLOYMENT">
+<PRPTBOX promptset="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PRV.PROMPTSET.ROLLBACK_DEPLOYMENT">
+<UC4RB_IPC_DEPLOY_VERSIONs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_IPC_DEPLOY_VERSION#" promptsetname="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PRV.PROMPTSET.ROLLBACK_DEPLOYMENT">1</UC4RB_IPC_DEPLOY_VERSIONs.00>
+<UC4RB_IPC_DEPLOYGROUPs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_IPC_DEPLOYGROUP#" promptsetname="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PRV.PROMPTSET.ROLLBACK_DEPLOYMENT"/>
+<UC4RB_IPC_GROUP_VERSIONs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_IPC_GROUP_VERSION#" promptsetname="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PRV.PROMPTSET.ROLLBACK_DEPLOYMENT">-1</UC4RB_IPC_GROUP_VERSIONs.00>
+<UC4RB_IPC_SKIP_ROLLEDBACKs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_IPC_SKIP_ROLLEDBACK#" promptsetname="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PRV.PROMPTSET.ROLLBACK_DEPLOYMENT">NO</UC4RB_IPC_SKIP_ROLLEDBACKs.00>
+<UC4RB_IPC_SRC_REPOSITORYs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_IPC_SRC_REPOSITORY#" promptsetname="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PRV.PROMPTSET.ROLLBACK_DEPLOYMENT"/>
+</PRPTBOX>
+</PROMPTSET>
+</node>
+<node content="1" id="PCK.ITPA_SHARED.PUB.PROMPTSET.SUDO" name="PCK.ITPA_SHARED.PUB.PROMPTSET.SUDO" parent="PPRPTS" type="PPROMPTSET">
+<PROMPTSET name="PCK.ITPA_SHARED.PUB.PROMPTSET.SUDO">
+<PRPTBOX promptset="PCK.ITPA_SHARED.PUB.PROMPTSET.SUDO">
+<UC4RB_SUDO_PASSWORDs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_SUDO_PASSWORD#" promptsetname="PCK.ITPA_SHARED.PUB.PROMPTSET.SUDO"/>
+<UC4RB_SUDO_USERs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_SUDO_USER#" promptsetname="PCK.ITPA_SHARED.PUB.PROMPTSET.SUDO"/>
+<UC4RB_USE_SUDOs.00 ReadFromTable="OPSE" altview="0" haslist="0" msginsert="" msgnr="" promptname="UC4RB_USE_SUDO#" promptsetname="PCK.ITPA_SHARED.PUB.PROMPTSET.SUDO">None</UC4RB_USE_SUDOs.00>
+</PRPTBOX>
+</PROMPTSET>
+</node>
+<node content="1" id="PCK.ITPA_SHARED.PRV.PROMPTSET.OVERWRITE_AGENT" name="PCK.ITPA_SHARED.PRV.PROMPTSET.OVERWRITE_AGENT" parent="PPRPTS" type="PPROMPTSET">
+<PROMPTSET name="PCK.ITPA_SHARED.PRV.PROMPTSET.OVERWRITE_AGENT">
+<PRPTBOX promptset="PCK.ITPA_SHARED.PRV.PROMPTSET.OVERWRITE_AGENT">
+<AGENTs.00 ReadFromTable="OPUD" altview="1" haslist="0" msginsert="" msgnr="" promptname="AGENT#" promptsetname="PCK.ITPA_SHARED.PRV.PROMPTSET.OVERWRITE_AGENT">&amp;AGENT#</AGENTs.00>
+<LOGINs.00 ReadFromTable="OPUD" altview="1" haslist="0" msginsert="" msgnr="" promptname="LOGIN#" promptsetname="PCK.ITPA_SHARED.PRV.PROMPTSET.OVERWRITE_AGENT">&amp;LOGIN#</LOGINs.00>
+</PRPTBOX>
+</PROMPTSET>
+</node>
+</dyntree>
+</dynvalues>
+<CIT/>
+<calendars CCTypeAll="0" CCTypeExt="0" CCTypeNone="0" CCTypeOne="1" CaleOn="0"/>
+<postconditions>
+<PostCon>
+<conditions id="CONDITIONS"/>
+</PostCon>
+</postconditions>
+</task>
+<OPTIONS/>
+</JobpStruct>
+</JOBP>
+<RUNTIME state="1">
+<MaxRetCode>0</MaxRetCode>
+<MrcExecute/>
+<MrcElseE>0</MrcElseE>
+<FcstStatus>0| |</FcstStatus>
+
+<ErtMethodDef>1</ErtMethodDef>
+<ErtMethodFix>0</ErtMethodFix>
+<ErtFix>0</ErtFix>
+<ErtDynMethod>2|Average</ErtDynMethod>
+<ErtMethodDyn>0</ErtMethodDyn>
+<ErtCnt>0</ErtCnt>
+<ErtCorr>0</ErtCorr>
+<ErtIgn>0</ErtIgn>
+<ErtIgnFlg>0</ErtIgnFlg>
+<ErtMinCnt>0</ErtMinCnt>
+<MrtMethodNone>1</MrtMethodNone>
+<MrtMethodFix>0</MrtMethodFix>
+<MrtFix>0</MrtFix>
+<MrtMethodErt>0</MrtMethodErt>
+<MrtErt>0</MrtErt>
+<MrtMethodDate>0</MrtMethodDate>
+<MrtDays>0</MrtDays>
+<MrtTime>00:00</MrtTime>
+<MrtTZ/>
+<SrtMethodNone>1</SrtMethodNone>
+<SrtMethodFix>0</SrtMethodFix>
+<SrtFix>0</SrtFix>
+<SrtMethodErt>0</SrtMethodErt>
+<SrtErt>0</SrtErt>
+<MrtCancel>0</MrtCancel>
+<MrtExecute>0</MrtExecute>
+<MrtExecuteObj/>
+</RUNTIME>
+<DYNVALUES state="1">
+<dyntree>
+<node content="1" id="VALUE" name="Variables" parent="" type="VALUE">
+<VALUE state="1">
+<Values/>
+<Mode>0</Mode>
+</VALUE>
+</node>
+<node content="1" id="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPTSET.CONNECTION_DETAILS" name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPTSET.CONNECTION_DETAILS" parent="PRPTS" type="PROMPTSET">
+<PROMPTSET name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPTSET.CONNECTION_DETAILS" ontop="1">
+<PRPTBOX promptset="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.PROMPTSET.CONNECTION_DETAILS" prptmode="1"/>
+</PROMPTSET>
+</node>
+<node content="1" id="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PRV.PROMPTSET.ROLLBACK_DEPLOYMENT" name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PRV.PROMPTSET.ROLLBACK_DEPLOYMENT" parent="PRPTS" type="PROMPTSET">
+<PROMPTSET name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PRV.PROMPTSET.ROLLBACK_DEPLOYMENT" ontop="1">
+<PRPTBOX promptset="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PRV.PROMPTSET.ROLLBACK_DEPLOYMENT" prptmode="1"/>
+</PROMPTSET>
+</node>
+<node content="1" id="PCK.ITPA_SHARED.PUB.PROMPTSET.SUDO" name="PCK.ITPA_SHARED.PUB.PROMPTSET.SUDO" parent="PRPTS" type="PROMPTSET">
+<PROMPTSET name="PCK.ITPA_SHARED.PUB.PROMPTSET.SUDO" ontop="1">
+<PRPTBOX promptset="PCK.ITPA_SHARED.PUB.PROMPTSET.SUDO" prptmode="1"/>
+</PROMPTSET>
+</node>
+<node content="1" id="PCK.ITPA_SHARED.PRV.PROMPTSET.OVERWRITE_AGENT" name="PCK.ITPA_SHARED.PRV.PROMPTSET.OVERWRITE_AGENT" parent="PRPTS" type="PROMPTSET">
+<PROMPTSET name="PCK.ITPA_SHARED.PRV.PROMPTSET.OVERWRITE_AGENT" ontop="1">
+<PRPTBOX promptset="PCK.ITPA_SHARED.PRV.PROMPTSET.OVERWRITE_AGENT" prptmode="1">
+<AGENTs.00 altview="1" haslist="0">&amp;AGENT#</AGENTs.00>
+<LOGINs.00 altview="1" haslist="0">&amp;LOGIN#</LOGINs.00>
+</PRPTBOX>
+</PROMPTSET>
+</node>
+</dyntree>
+</DYNVALUES>
+<DEPLOYMENT state="1">
+<DeploymentFlag>0</DeploymentFlag>
+<WFTypeA>1</WFTypeA>
+<WFTypeC>0</WFTypeC>
+<AppName/>
+<WFName/>
+<ComponentName/>
+</DEPLOYMENT>
+<ROLLBACK state="1">
+<RollbackFlag>0</RollbackFlag>
+<CBackupObj/>
+<CRollbackObj/>
+<FBackupPath/>
+<FDeleteBefore>0</FDeleteBefore>
+<FInclSubDirs>0</FInclSubDirs>
+</ROLLBACK>
+<SCRIPT mode="1" state="1">
+<MSCRI/>
+</SCRIPT>
+<DOCU_Docu state="1" type="text">
+<DOC><![CDATA[= Action name =
+PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.ACTION.ROLLBACK_DEPLOYMENT
+
+= General description =
+This action is used to roll back a deployment to purge a deployed version from the target repository or folder and revert objects to a previous version of deployment. 
+
+Rollback only works for the versioned repositories.
+
+User needs to provide atleast the deployment group along with the version of deployment run to be rolled back. If there are multiple deployment group across different repositories you can also provide an optional source repository to resolve the exact deployment group to be rolled back. 
+
+Example:
+You have a deployment with five versions and want to rollback the last two versions. To do this, 
+
+* You must first call this action with deploy run as 1. Enter the following text at the prompt to roll back once and purge the last deployment:
+deployment group name		: Deploy_sales 
+Nth latest deployment run	: 1
+
+* Next, call this action with deploy run as 2.
+deployment group name		: Deploy_sales 
+Nth latest deployment run	: 2
+
+= Failure Conditions =
+* If user provides a deploy run which is already rolled back and Skip if already deployed is set to 'NO'.
+* If user provides nth version to rollback without rolling back n-1th version.
+* If target repository is non-versioned.
+* If user provides both or doesn't provide any of these : Password and Password environment variable the action will fail.This doesn't apply in kerberos mode.
+
+= Inputs =
+* PMREP path				: Specify the directory where the PMREP executable is located. E.g. C:\informatica\9.5.1.HF1_Informatica_cmd_utilities_win32-x86\PowerCenter\server\bin
+* Repository name			: Specify repository name to which you want to connect. E.g. myrepository
+* Domain name 				: Specify domain name for the repository. E.g. abcdomain
+* Host name				: Specify host name for the repository. Specify if the gateway connectivity information in the domains.infa file is out of date. E.g. host123 or 192.168.1.25
+* Port number				: Specify the port number for the repository. Specify if the gateway connectivity information in the domains.infa file is out of date. E.g. 6005
+* Username				: Specify username for authentication. E.g. administrator
+* Security domain			: Specify security domain that the user belongs to. Required if you use LDAP. It is case sensitive. E.g. Native
+* Password				: Specify password for authentication.
+* Password environment variable 	: Specify password environment variable. Required if Password is not given. Eg. INFA_PM_PASSWORD
+* Connect without user			: Select Yes if you want to connect without user in Kerberos mode. Do not provide username, security domain and password to connect in kerberos mode. Please consult the corresponding command line specification version whether it support this input or not.
+* Environment variables file		: Specify full path with file name of the executable batch or shell script to initialize environment variables. E.g /home/informatica/envVariable.sh. This file is usually provided for a Unix agent since we might want to set some environment variables like PATH, INFA_HOME, LD_LIBRARY_PATH, <password environment variable>, LC_ALL etc.
+* Deployment group name 		: Provide name of the deployment group to rollback. E.g. myDeplyGroup
+* Nth latest deployment run		: Provide version of the deployment you want to roll back. E.g. 4. Default value is 1. If there are multiple deployments then deploy run 1 denotes the latest deployment.
+* Source repository name 		: Specify name of the source repository from where you deploy the deployment group. E.g. srcRepository. Please consult the corresponding command line specification version whether it support this input or not.
+* Nth latest version of deployment group: Provide version of the deployment group you want to roll back. Default value is -1. We ignore this field if value is -1. Please consult the corresponding command line specification version whether it support this input or not.
+* Skip if already rolled back		: Specify yes incase you don't want to fail the action if deployment is already rollback. Default value is NO.
+* Sudo Password				: The password for the sudo command.
+* Options				: Run using sudo password (and sudo username if specified).
+* Sudo Username				: The username to be used for the sudo command.
+* Overwrite Agent			: Overwrites the default agent
+* Overwrite Login			: Overwrites the default login
+
+= Behavior =
+(none)
+
+= Return Value =
+(none)
+
+= Outputs =
+* Return code is 0 in case of success.
+* Return code is 1 in case of failure.
+
+= Rollback =
+(none)
+
+= Logging =
+AE logs will be displayed in the AE report.
+
+= Example =
+(none)
+
+
+]]></DOC>
+</DOCU_Docu>
+</JOBP>
+</uc-export>

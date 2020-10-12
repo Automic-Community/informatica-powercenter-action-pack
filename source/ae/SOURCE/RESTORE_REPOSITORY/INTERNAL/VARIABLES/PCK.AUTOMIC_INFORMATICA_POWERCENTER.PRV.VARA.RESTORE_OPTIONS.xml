@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="ISO-8859-15" standalone="no"?><uc-export clientvers="11.0.0">
+<VARA OVD_VRName="FREI" data_type="STATIC" name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PRV.VARA.RESTORE_OPTIONS" replacementmode="2">
+<HEADER state="1">
+<Title>Options while restoring a repository</Title>
+<ArchiveKey1/>
+<ArchiveKey2/>
+<OH_SubType>STATIC</OH_SubType>
+</HEADER>
+<ATTR_VARA state="1">
+<Type>C|Text</Type>
+<lblSource>Static</lblSource>
+<source>STATIC</source>
+<VRName>FREI|Freely selected</VRName>
+<NotFoundErr>0</NotFoundErr>
+<NotFoundDef>1</NotFoundDef>
+<ShareN>0</ShareN>
+<ShareL>0</ShareL>
+<ShareR>0</ShareR>
+<MaxValue_C>1024</MaxValue_C>
+<CheckMax_C>0</CheckMax_C>
+<uppercase>0</uppercase>
+<sortColumn>0</sortColumn>
+<sortDirection>0</sortDirection>
+</ATTR_VARA>
+<VARA state="1">
+<Variables>
+<row Name="-a" Value="Create internal folder IDs" Value1="" Value2="" Value3="" Value4=""/>
+<row Name="-b" Value="Skip log tables" Value1="" Value2="" Value3="" Value4=""/>
+<row Name="-e" Value="Exit if different domain name" Value1="" Value2="" Value3="" Value4=""/>
+<row Name="-f" Value="Skip task statistics" Value1="" Value2="" Value3="" Value4=""/>
+<row Name="-g" Value="Promote for global repository" Value1="" Value2="" Value3="" Value4=""/>
+<row Name="-j" Value="Skip deploy group history" Value1="" Value2="" Value3="" Value4=""/>
+<row Name="-q" Value="Skip MX data" Value1="" Value2="" Value3="" Value4=""/>
+<row Name="-y" Value="Enable versioning" Value1="" Value2="" Value3="" Value4=""/>
+</Variables>
+</VARA>
+<DOCU_Docu state="1" type="text">
+<DOC/>
+</DOCU_Docu>
+</VARA>
+</uc-export>

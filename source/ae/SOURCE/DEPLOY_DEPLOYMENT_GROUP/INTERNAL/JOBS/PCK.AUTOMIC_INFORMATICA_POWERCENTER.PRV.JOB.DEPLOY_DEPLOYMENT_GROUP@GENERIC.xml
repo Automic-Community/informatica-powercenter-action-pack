@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="ISO-8859-15" standalone="no"?><uc-export clientvers="11.0.0">
+<JOBS_GENERIC AttrType="GENERIC" name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PRV.JOB.DEPLOY_DEPLOYMENT_GROUP@GENERIC">
+<XHEADER state="1">
+<Title>Deploy deployment group</Title>
+<ArchiveKey1/>
+<ArchiveKey2/>
+<Active>1</Active>
+<OH_SubType/>
+<CustomAttributes KeyListID="0" dataRequestID="0"/>
+</XHEADER>
+<OUTPUTREG state="1">
+<FileReg/>
+</OUTPUTREG>
+<SYNCREF state="1">
+<Syncs/>
+</SYNCREF>
+<ATTR_JOBS state="1">
+<Queue>CLIENT_QUEUE</Queue>
+<StartType/>
+<HostDst>|&lt;GENERIC&gt;|HOST</HostDst>
+<HostATTR_Type>GENERIC</HostATTR_Type>
+<CodeName/>
+<Login/>
+<IntAccount/>
+<ExtRepDef>1</ExtRepDef>
+<ExtRepAll>0</ExtRepAll>
+<ExtRepNone>0</ExtRepNone>
+<AutoDeactNo>0</AutoDeactNo>
+<AutoDeact1ErrorFree>0</AutoDeact1ErrorFree>
+<AutoDeactErrorFree>0</AutoDeactErrorFree>
+<DeactWhen/>
+<DeactDelay>0</DeactDelay>
+<AutoDeactAlways>1</AutoDeactAlways>
+<AttDialog>0</AttDialog>
+<ActAtRun>0</ActAtRun>
+<Consumption>0</Consumption>
+<UC4Priority>0</UC4Priority>
+<MaxParallel2>0</MaxParallel2>
+<MpElse1>1</MpElse1>
+<MpElse2>0</MpElse2>
+<TZ/>
+</ATTR_JOBS>
+<RUNTIME state="1">
+<MaxRetCode>0</MaxRetCode>
+<MrcExecute/>
+<MrcElseE>0</MrcElseE>
+<FcstStatus>0| |</FcstStatus>
+
+<ErtMethodDef>1</ErtMethodDef>
+<ErtMethodFix>0</ErtMethodFix>
+<ErtFix>0</ErtFix>
+<ErtDynMethod>2|Average</ErtDynMethod>
+<ErtMethodDyn>0</ErtMethodDyn>
+<ErtCnt>0</ErtCnt>
+<ErtCorr>0</ErtCorr>
+<ErtIgn>0</ErtIgn>
+<ErtIgnFlg>0</ErtIgnFlg>
+<ErtMinCnt>0</ErtMinCnt>
+<MrtMethodNone>1</MrtMethodNone>
+<MrtMethodFix>0</MrtMethodFix>
+<MrtFix>0</MrtFix>
+<MrtMethodErt>0</MrtMethodErt>
+<MrtErt>0</MrtErt>
+<MrtMethodDate>0</MrtMethodDate>
+<MrtDays>0</MrtDays>
+<MrtTime>00:00</MrtTime>
+<MrtTZ/>
+<SrtMethodNone>1</SrtMethodNone>
+<SrtMethodFix>0</SrtMethodFix>
+<SrtFix>0</SrtFix>
+<SrtMethodErt>0</SrtMethodErt>
+<SrtErt>0</SrtErt>
+<MrtCancel>0</MrtCancel>
+<MrtExecute>0</MrtExecute>
+<MrtExecuteObj/>
+</RUNTIME>
+<DYNVALUES state="1">
+<dyntree>
+<node content="1" id="VALUE" name="Variables" parent="" type="VALUE">
+<VALUE state="1">
+<Values/>
+<Mode>0</Mode>
+</VALUE>
+</node>
+</dyntree>
+</DYNVALUES>
+<ROLLBACK state="1">
+<RollbackFlag>0</RollbackFlag>
+<CBackupObj/>
+<CRollbackObj/>
+<FBackupPath/>
+<FDeleteBefore>0</FDeleteBefore>
+<FInclSubDirs>0</FInclSubDirs>
+</ROLLBACK>
+<PRE_SCRIPT mode="1" replacementmode="1" state="1">
+<PSCRI><![CDATA[:INC PCK.ITPA_SHARED.PUB.INCLUDE.START_STOP_JOB_ACCORDING_TO_AGENT_OS]]></PSCRI>
+</PRE_SCRIPT>
+<SCRIPT mode="1" state="1">
+<MSCRI><![CDATA[:IF &$PLATFORM# EQ "WINDOWS"
+   @echo off
+:ENDIF
+
+: DEFINE &STRING_ARR#, string, 30
+: INC PCK.ITPA_SHARED.PUB.INCLUDE.SUDOERS_HEADER
+
+!------------------------------------------ LOGGING INPUT PARAMETERS --------------------------------------------------------------
+: INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.HEADER.PARAM_VALIDATION
+: INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.COMMON_LOGGING
+
+! Deployment group name
+: SET &UC4RB_LOGGING_PARAMETER# = "Deployment group name"
+: SET &UC4RB_LOGGING_PARAMETER_VAL# = "&UC4RB_IPC_DEPLOYGROUP#"
+: INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.PARAM
+
+! Control file
+: SET &UC4RB_LOGGING_PARAMETER# = "Control file"
+: SET &UC4RB_LOGGING_PARAMETER_VAL# = "&UC4RB_IPC_CONTROL_FILE#"
+: INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.PARAM
+
+! Target Repository name
+: SET &UC4RB_LOGGING_PARAMETER# = "Target repository name"
+: SET &UC4RB_LOGGING_PARAMETER_VAL# = "&UC4RB_IPC_TRG_REP_NAME#"
+: INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.PARAM
+
+! Target Domain name
+: SET &UC4RB_LOGGING_PARAMETER# = "Target domain name"
+: SET &UC4RB_LOGGING_PARAMETER_VAL# = "&UC4RB_IPC_TRG_DOMAIN_NAME#"
+: INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.PARAM
+
+! Target Host name
+: SET &UC4RB_LOGGING_PARAMETER# = "Target host name"
+: SET &UC4RB_LOGGING_PARAMETER_VAL# = "&UC4RB_IPC_TRG_HOSTNAME#"
+: INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.PARAM
+
+! Target Port number
+: SET &UC4RB_LOGGING_PARAMETER# = "Target port number"
+: SET &UC4RB_LOGGING_PARAMETER_VAL# = "&UC4RB_IPC_TRG_PORT#"
+: INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.PARAM
+
+! Target Repository username
+: SET &UC4RB_LOGGING_PARAMETER# = "Target repository username"
+: SET &UC4RB_LOGGING_PARAMETER_VAL# = "&UC4RB_IPC_TRG_REP_USERNAME#"
+: INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.PARAM
+
+! Target Repository security domain
+: SET &UC4RB_LOGGING_PARAMETER# = "Target repository security domain"
+: SET &UC4RB_LOGGING_PARAMETER_VAL# = "&UC4RB_IPC_TRG_REP_DOMAIN#"
+: INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.PARAM
+
+! Target Repository Password environment variable
+: SET &UC4RB_LOGGING_PARAMETER# = "Target repository password environment variable"
+: SET &UC4RB_LOGGING_PARAMETER_VAL# = "&UC4RB_IPC_TRG_PSWD_ENV_VAR#"
+: INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.PARAM
+
+! logging start of execution
+: INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.HEADER.EXECUTION
+
+: INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.EXECUTION_ENVIRONMENT
+
+!----------------------------------------- EXECUTING PMREP CONNECT COMMANDLET -------------------------------------------------------
+! Command to connect to repository
+: INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.LOGIN_REPOSITORY
+
+!------------------------------------------ CREATING PMREP COMMANDLET ----------------------------------------------------------
+! prepare command to deploy deployment groups
+: SET &UC4RB_IPC_DEPLOY_CMDLET# = "pmrep deploydeploymentgroup"
+
+! deployment group name
+: SET &UC4RB_ESCAPED_STRING# = &UC4RB_IPC_DEPLOYGROUP#
+: INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.ESCAPE_ARG_VALUE
+: SET &UC4RB_IPC_DEPLOY_CMDLET# = STR_CAT(&UC4RB_IPC_DEPLOY_CMDLET#, " -p &UC4RB_ESCAPED_STRING#")
+
+! Control file
+: SET &UC4RB_ESCAPED_STRING# = &UC4RB_IPC_CONTROL_FILE#
+: INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.ESCAPE_ARG_VALUE
+: SET &UC4RB_IPC_DEPLOY_CMDLET# = STR_CAT(&UC4RB_IPC_DEPLOY_CMDLET#, " -c &UC4RB_ESCAPED_STRING#")
+
+! Target Repository Name (different repository)
+: SET &UC4RB_ESCAPED_STRING# = &UC4RB_IPC_TRG_REP_NAME#
+: INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.ESCAPE_ARG_VALUE
+: SET &UC4RB_IPC_DEPLOY_CMDLET# = STR_CAT(&UC4RB_IPC_DEPLOY_CMDLET#, " -r &UC4RB_ESCAPED_STRING#")
+
+
+! Target Repository security domain
+: IF &UC4RB_IPC_TRG_REP_DOMAIN# <> ""
+:     SET &UC4RB_ESCAPED_STRING# = &UC4RB_IPC_TRG_REP_DOMAIN#
+:     INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.ESCAPE_ARG_VALUE
+:     SET &UC4RB_IPC_DEPLOY_CMDLET# = STR_CAT(&UC4RB_IPC_DEPLOY_CMDLET#, " -s &UC4RB_ESCAPED_STRING#")
+: ENDIF
+
+! Target Repository username
+: IF &UC4RB_IPC_TRG_REP_USERNAME# <> ""
+:     SET &UC4RB_ESCAPED_STRING# = &UC4RB_IPC_TRG_REP_USERNAME#
+:     INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.ESCAPE_ARG_VALUE
+:     SET &UC4RB_IPC_DEPLOY_CMDLET# = STR_CAT(&UC4RB_IPC_DEPLOY_CMDLET#, " -n &UC4RB_ESCAPED_STRING#")
+: ENDIF
+
+! Target Repository Password environment variable
+: IF &UC4RB_IPC_TRG_PSWD_ENV_VAR# <> ""
+:     SET &UC4RB_ESCAPED_STRING# = &UC4RB_IPC_TRG_PSWD_ENV_VAR#
+:     INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.ESCAPE_ARG_VALUE
+:     SET &UC4RB_IPC_DEPLOY_CMDLET# = STR_CAT(&UC4RB_IPC_DEPLOY_CMDLET#, " -X &UC4RB_ESCAPED_STRING#")
+: ENDIF
+
+! Domain name
+: IF &UC4RB_IPC_TRG_DOMAIN_NAME# <> ""
+:     SET &UC4RB_ESCAPED_STRING# = &UC4RB_IPC_TRG_DOMAIN_NAME#
+:     INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.ESCAPE_ARG_VALUE
+:     SET &UC4RB_IPC_DEPLOY_CMDLET# = STR_CAT(&UC4RB_IPC_DEPLOY_CMDLET#, " -d &UC4RB_ESCAPED_STRING#")
+: ENDIF
+
+! Hostname
+: IF &UC4RB_IPC_TRG_HOSTNAME# <> ""
+:     SET &UC4RB_ESCAPED_STRING# = &UC4RB_IPC_TRG_HOSTNAME#
+:     INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.ESCAPE_ARG_VALUE
+:     SET &UC4RB_IPC_DEPLOY_CMDLET# = STR_CAT(&UC4RB_IPC_DEPLOY_CMDLET#, " -h &UC4RB_ESCAPED_STRING#")
+
+!     Port number
+:     SET &UC4RB_IPC_DEPLOY_CMDLET# = STR_CAT(&UC4RB_IPC_DEPLOY_CMDLET#, " -o &UC4RB_IPC_TRG_PORT#")
+: ENDIF
+
+! Logging the command
+: SET &LOGGING_COMMAND# = &UC4RB_IPC_DEPLOY_CMDLET#
+: INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.LOGGING_COMMAND
+
+! Decrypt Target Repository Password
+: IF &UC4RB_IPC_TRG_REP_PASSWORD# <> ""
+:     SET &UC4RB_ENCRYPTED_PASSWORD_TMP# = "&UC4RB_IPC_TRG_REP_PASSWORD#"
+:     INC PCK.ITPA_SHARED.PRV.INCLUDE.DECRYPT_PASSWORD
+:     SWITCH &$PLATFORM#
+:         CASE "WINDOWS"
+:                     SET &UC4RB_IPC_DEPLOY_CMDLET# = STR_CAT(&UC4RB_IPC_DEPLOY_CMDLET#, " -x %UC4_DECRYPTED_PWD%")
+:         CASE "UNIX"
+:                     SET &UC4RB_IPC_DEPLOY_CMDLET# = STR_CAT(&UC4RB_IPC_DEPLOY_CMDLET#, " -x $UC4_DECRYPTED_PWD")
+:         OTHER
+:     ENDSWITCH
+: ENDIF
+
+!------------------------------------------ EXECUTING PMREP COMMANDLETS ------------------------------------------
+&UC4RB_IPC_DEPLOY_CMDLET#
+
+:IF &UC4RB_AGENT_OS# = "WINDOWS"
+  SET ERROR=%ERRORLEVEL%
+: ELSE
+  error=$?
+:ENDIF
+
+! Disconnect command
+:INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.PMREP_CLEANUP
+
+!------------------------------------------- Error/Success Message -----------------------------------------------------
+! Error message
+: SET &UC4RB_LOGGING_ERROR# = "******** DEPLOY DEPLOYMENT GROUP ACTION FAILED ********"
+: INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.CHECK_CMD_RETCODE@GENERIC
+
+! Success message
+: SET &UC4RB_LOGGING_INFO# = "******** DEPLOY DEPLOYMENT GROUP ACTION EXECUTED SUCCESSFULLY ********"
+: INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.INFO
+
+: INC PCK.ITPA_SHARED.PUB.INCLUDE.SUDOERS_FOOTER]]></MSCRI>
+</SCRIPT>
+<OUTPUTSCAN state="1">
+<Inherit>N</Inherit>
+<filterobjects/>
+<HostFsc/>
+<LoginFsc/>
+</OUTPUTSCAN>
+<POST_SCRIPT mode="1" replacementmode="1" state="1">
+<OSCRI/>
+</POST_SCRIPT>
+<DOCU_Docu state="1" type="text">
+<DOC/>
+</DOCU_Docu>
+</JOBS_GENERIC>
+</uc-export>

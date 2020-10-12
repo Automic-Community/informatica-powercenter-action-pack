@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ISO-8859-15" standalone="no"?><uc-export clientvers="11.0.0">
+<JOBI name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.PMREP_CLEANUP">
+<HEADER state="1">
+<Title>pmrep clean up command logging</Title>
+<ArchiveKey1/>
+<ArchiveKey2/>
+<OH_SubType/>
+</HEADER>
+<SCRIPT mode="1" state="1">
+<MSCRI><![CDATA[:SET &CLEANUP_FAILURE_MSG# = 'INFO: ******** pmrep cleanup command failed ********'
+echo "CLEANUP CMD EXECUTION: pmrep cleanup"
+pmrep cleanup
+
+
+:IF &UC4RB_AGENT_OS# = "WINDOWS"
+  IF %ERRORLEVEL% NEQ 0 (
+      echo "&CLEANUP_FAILURE_MSG#"
+  )
+  SET ERRORLEVEL=%ERROR%
+: ELSE
+  clean_error=$?
+  if [ "$clean_error" -ne "0" ]
+      then
+         echo "&CLEANUP_FAILURE_MSG#"
+  fi
+:ENDIF
+]]></MSCRI>
+</SCRIPT>
+<DOCU_Docu state="1" type="text">
+<DOC><![CDATA[This include does the following:
+* Forms the command to connect to a repository.
+* Execution of the connect command. 
+]]></DOC>
+</DOCU_Docu>
+</JOBI>
+</uc-export>

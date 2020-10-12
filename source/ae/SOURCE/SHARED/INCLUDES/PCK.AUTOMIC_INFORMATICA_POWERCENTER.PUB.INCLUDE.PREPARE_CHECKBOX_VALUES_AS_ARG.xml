@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="ISO-8859-15" standalone="no"?><uc-export clientvers="11.0.0">
+<JOBI name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.PREPARE_CHECKBOX_VALUES_AS_ARG">
+<HEADER state="1">
+<Title>Resolve checkbox value as cammand line argument from VARA</Title>
+<ArchiveKey1/>
+<ArchiveKey2/>
+<OH_SubType/>
+</HEADER>
+<SCRIPT mode="1" state="1">
+<MSCRI><![CDATA[
+: FILL &OPTIONS_ARRAY#[] = STR_SPLIT(&CHECKBOX_OPTIONS#,";")
+: SET &LEN# = LENGTH(&OPTIONS_ARRAY#[])
+
+: IF &LEN# GT 0
+:   SET &HANDLE# = PREP_PROCESS_VAR(&OPTIONS_VARA#)
+:   SET &OPTIONS# = " "
+:   PROCESS &HANDLE#
+:     SET &KEY# = GET_PROCESS_LINE(&HANDLE#,1)
+:     SET &VALUE# = GET_VAR(&OPTIONS_VARA#,&KEY#,1)
+:     SET &VAR# = 1
+:     WHILE &VAR# LE &LEN#
+:       IF &VALUE# EQ &OPTIONS_ARRAY#[&VAR#]
+:            SET &OPTIONS# = STR_CAT(&OPTIONS#, "&KEY# ")
+:            PRINT  "&KEY# = &VALUE#"
+:        ENDIF
+:        SET &VAR# = &VAR#+ 1
+:     ENDWHILE
+:   ENDPROCESS
+:   CLOSE_PROCESS &HANDLE#
+: ENDIF]]></MSCRI>
+</SCRIPT>
+<DOCU_Docu state="1" type="text">
+<DOC/>
+</DOCU_Docu>
+</JOBI>
+</uc-export>

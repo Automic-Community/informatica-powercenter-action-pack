@@ -1,0 +1,552 @@
+<?xml version="1.0" encoding="ISO-8859-15" standalone="no"?><uc-export clientvers="11.0.0">
+<JOBS_GENERIC AttrType="GENERIC" name="PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.JOB.CHANGE_MODE@GENERIC">
+<XHEADER state="1">
+<Title>Change mode of a repository to exclusive or normal</Title>
+<ArchiveKey1/>
+<ArchiveKey2/>
+<Active>1</Active>
+<OH_SubType/>
+<CustomAttributes KeyListID="0" dataRequestID="0"/>
+</XHEADER>
+<OUTPUTREG state="1">
+<FileReg/>
+</OUTPUTREG>
+<SYNCREF state="1">
+<Syncs/>
+</SYNCREF>
+<ATTR_JOBS state="1">
+<Queue>CLIENT_QUEUE</Queue>
+<StartType/>
+<HostDst>|&lt;GENERIC&gt;|HOST</HostDst>
+<HostATTR_Type>GENERIC</HostATTR_Type>
+<CodeName/>
+<Login/>
+<IntAccount/>
+<ExtRepDef>1</ExtRepDef>
+<ExtRepAll>0</ExtRepAll>
+<ExtRepNone>0</ExtRepNone>
+<AutoDeactNo>0</AutoDeactNo>
+<AutoDeact1ErrorFree>0</AutoDeact1ErrorFree>
+<AutoDeactErrorFree>0</AutoDeactErrorFree>
+<DeactWhen/>
+<DeactDelay>0</DeactDelay>
+<AutoDeactAlways>1</AutoDeactAlways>
+<AttDialog>0</AttDialog>
+<ActAtRun>1</ActAtRun>
+<Consumption>0</Consumption>
+<UC4Priority>0</UC4Priority>
+<MaxParallel2>0</MaxParallel2>
+<MpElse1>1</MpElse1>
+<MpElse2>0</MpElse2>
+<TZ/>
+</ATTR_JOBS>
+<RUNTIME state="1">
+<MaxRetCode>0</MaxRetCode>
+<MrcExecute/>
+<MrcElseE>0</MrcElseE>
+<FcstStatus>0| |</FcstStatus>
+
+<ErtMethodDef>1</ErtMethodDef>
+<ErtMethodFix>0</ErtMethodFix>
+<ErtFix>0</ErtFix>
+<ErtDynMethod>2|Average</ErtDynMethod>
+<ErtMethodDyn>0</ErtMethodDyn>
+<ErtCnt>0</ErtCnt>
+<ErtCorr>0</ErtCorr>
+<ErtIgn>0</ErtIgn>
+<ErtIgnFlg>0</ErtIgnFlg>
+<ErtMinCnt>0</ErtMinCnt>
+<MrtMethodNone>1</MrtMethodNone>
+<MrtMethodFix>0</MrtMethodFix>
+<MrtFix>0</MrtFix>
+<MrtMethodErt>0</MrtMethodErt>
+<MrtErt>0</MrtErt>
+<MrtMethodDate>0</MrtMethodDate>
+<MrtDays>0</MrtDays>
+<MrtTime>00:00</MrtTime>
+<MrtTZ/>
+<SrtMethodNone>1</SrtMethodNone>
+<SrtMethodFix>0</SrtMethodFix>
+<SrtFix>0</SrtFix>
+<SrtMethodErt>0</SrtMethodErt>
+<SrtErt>0</SrtErt>
+<MrtCancel>0</MrtCancel>
+<MrtExecute>0</MrtExecute>
+<MrtExecuteObj/>
+</RUNTIME>
+<DYNVALUES state="1">
+<dyntree>
+<node content="1" id="VALUE" name="Variables" parent="" type="VALUE">
+<VALUE state="1">
+<Values/>
+<Mode>0</Mode>
+</VALUE>
+</node>
+</dyntree>
+</DYNVALUES>
+<ROLLBACK state="1">
+<RollbackFlag>0</RollbackFlag>
+<CBackupObj/>
+<CRollbackObj/>
+<FBackupPath/>
+<FDeleteBefore>0</FDeleteBefore>
+<FInclSubDirs>0</FInclSubDirs>
+</ROLLBACK>
+<PRE_SCRIPT mode="1" replacementmode="1" state="1">
+<PSCRI><![CDATA[:INC PCK.ITPA_SHARED.PUB.INCLUDE.START_STOP_JOB_ACCORDING_TO_AGENT_OS]]></PSCRI>
+</PRE_SCRIPT>
+<SCRIPT mode="1" state="1">
+<MSCRI><![CDATA[:IF &$PLATFORM# EQ "WINDOWS"
+ @echo off
+:ENDIF
+
+:DEFINE &STRING_ARR#,string,30
+:INC PCK.ITPA_SHARED.PUB.INCLUDE.SUDOERS_HEADER
+
+: SET &RECHECK_INTERVAL# = 5
+: SET &RECHECK_COUNT# = 60
+!------------------------------------------ LOGGING INPUT PARAMETERS ----------------------------------------------------------------
+: INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.HEADER.PARAM_VALIDATION
+: INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.COMMON_LOGGING
+
+: SET &UC4RB_LOGGING_PARAMETER# = "Target mode"
+: SET &UC4RB_LOGGING_PARAMETER_VAL# = "&UC4RB_IPC_TRGT_MODE#"
+: INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.PARAM
+
+! logging start of execution
+: INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.HEADER.EXECUTION
+
+: INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.EXECUTION_ENVIRONMENT
+!----------------------------Check - target mode should either be exclusive or normal----------------------------
+
+! Action specific validation
+! Validate target mode
+: SET &TARGET_MODE# = STR_UC(&UC4RB_IPC_TRGT_MODE#)
+: IF &TARGET_MODE# <> "EXCLUSIVE" OR "NORMAL"
+:     STOP MSG, 51, "Target repository mode [&UC4RB_IPC_TRGT_MODE#] is invalid"
+: ENDIF
+
+!----------------------------form the infacmd command to get the mode of repo---------------------------------------
+! Repository
+: SET &UC4RB_ESCAPED_STRING# = &UC4RB_IPC_REPOSITORY#
+: INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.ESCAPE_ARG_VALUE
+: SET &CMDLET# = "-sn &UC4RB_ESCAPED_STRING#"
+
+! Domain
+: IF &UC4RB_IPC_DOMAIN# <> ""
+:   SET &UC4RB_ESCAPED_STRING# = &UC4RB_IPC_DOMAIN#
+:   INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.ESCAPE_ARG_VALUE
+:   SET &CMDLET# = STR_CAT(&CMDLET#, " -dn &UC4RB_ESCAPED_STRING#")
+: ENDIF
+
+! USERNAME
+: IF &UC4RB_IPC_USERNAME# <> ""
+:   SET &UC4RB_ESCAPED_STRING# = &UC4RB_IPC_USERNAME#
+:   INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.ESCAPE_ARG_VALUE
+:   SET &CMDLET# = STR_CAT(&CMDLET#, " -un &UC4RB_ESCAPED_STRING#")
+: ENDIF
+
+! Security domain
+: IF &UC4RB_IPC_SECURITYDOMAIN# <> ""
+:   SET &UC4RB_ESCAPED_STRING# = &UC4RB_IPC_SECURITYDOMAIN#
+:   INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.ESCAPE_ARG_VALUE
+:   SET &CMDLET# = STR_CAT(&CMDLET#, " -sdn &UC4RB_ESCAPED_STRING#")
+: ENDIF
+
+! Host name and Port
+: IF &UC4RB_IPC_HOSTNAME# <> ""
+:   SET &UC4RB_ESCAPED_STRING# = &UC4RB_IPC_HOSTNAME#
+:   INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.ESCAPE_ARG_VALUE
+:   SET &CMDLET# = STR_CAT(&CMDLET#, " -hp &UC4RB_ESCAPED_STRING#:&UC4RB_IPC_PORTNUMBER#")
+: ENDIF
+
+
+: SET &GET_MODE_CMD# = "GetServiceOption &CMDLET#  -op OperatingMode"
+: SET &GET_STATUS_CMD# = "GetServiceStatus &CMDLET#"
+: SET &SET_STATUS_ENABLED_CMD# = "EnableService &CMDLET#"
+: SET &SET_STATUS_DISABLED_CMD# = "DisableService &CMDLET# -mo Abort"
+: SET &SET_MODE_CMD# = "updateRepositoryService &CMDLET# -so OperatingMode=&UC4RB_IPC_TRGT_MODE#"
+
+!----------------------------------------- Logging the command-----------------------------------------------
+: SET &LOGGING_COMMAND# = &GET_MODE_CMD#
+: INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.LOGGING_COMMAND
+
+: SET &LOGGING_COMMAND# = &GET_STATUS_CMD#
+: INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.LOGGING_COMMAND
+
+: SET &LOGGING_COMMAND# = &SET_STATUS_ENABLED_CMD#
+: INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.LOGGING_COMMAND
+
+: SET &LOGGING_COMMAND# = &SET_STATUS_DISABLED_CMD#
+: INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.LOGGING_COMMAND
+
+: SET &LOGGING_COMMAND# = &SET_MODE_CMD#
+: INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.LOGGING_COMMAND
+!--------------------------------------------------------------------------------------------------------------
+
+! Decrypt the password
+: SET &TEMPPASSWORD# = ""
+: IF &UC4RB_IPC_PASSWORD# <> ""
+:     INC PCK.ITPA_SHARED.PUB.INCLUDE.ATTACH
+:     SET &UC4RB_ENCRYPTED_PASSWORD_TMP# = "&UC4RB_IPC_PASSWORD#"
+:     INC PCK.ITPA_SHARED.PRV.INCLUDE.DECRYPT_PASSWORD
+:     SWITCH &$PLATFORM#
+:             CASE "WINDOWS"
+:                    SET &TEMPPASSWORD# = " -pd %UC4_DECRYPTED_PWD%"
+:             CASE "UNIX"
+:                    SET &TEMPPASSWORD# = " -pd $UC4_DECRYPTED_PWD"
+:             OTHER
+:     ENDSWITCH
+: ENDIF
+
+: SET &GET_MODE_CMD# = STR_CAT(&GET_MODE_CMD#, &TEMPPASSWORD#)
+: SET &GET_STATUS_CMD# = STR_CAT(&GET_STATUS_CMD#, &TEMPPASSWORD#)
+: SET &SET_STATUS_ENABLED_CMD# = STR_CAT(&SET_STATUS_ENABLED_CMD#, &TEMPPASSWORD#)
+: SET &SET_STATUS_DISABLED_CMD# = STR_CAT(&SET_STATUS_DISABLED_CMD#, &TEMPPASSWORD#)
+: SET &SET_MODE_CMD# = STR_CAT(&SET_MODE_CMD#, &TEMPPASSWORD#)
+
+: SET &SUCCESSFUL_CMD_EXEC# = "Command ran successfully"
+
+
+! RUN CHECK MODE COMMAND REPOSITORY
+: SWITCH &$PLATFORM#
+:   CASE "WINDOWS"
+        echo "Retrieving operating mode.."
+        for /f "tokens=1" %%i in ('"infacmd &GET_MODE_CMD#"') do (
+              set MODE=%%i
+              goto :end
+        )
+        :end
+        echo "   Command output [%MODE%]"
+
+        IF NOT "Z%MODE:Normal=%" == "Z%MODE%" (
+              SET MODE=NORMAL
+              echo "   Current repository operating mode is normal"
+        ) ELSE IF NOT "Z%MODE:Exclusive=%" == "Z%MODE%" (
+              SET MODE=EXCLUSIVE
+              echo "   Current repository operating mode is exclusive"
+        ) ELSE (
+              echo "   Error while retrieving repository operating mode"
+              SET /a ERROR=1
+              goto :endscript
+        )
+
+        echo UC4RB_IPC_CURRENT_MODE::=%MODE%
+
+        IF "%MODE%"=="&TARGET_MODE#" (
+              echo "Current operating mode [%MODE%] is same as the target operating mode [&TARGET_MODE#]"
+              call :enabledisablereposervice ENABLED "infacmd &SET_STATUS_ENABLED_CMD#"
+              goto :checkerrorlevel
+        )
+        echo "Setting operating mode from %MODE% to &TARGET_MODE# .."
+        call :enabledisablereposervice DISABLED "infacmd &SET_STATUS_DISABLED_CMD#"
+        IF %ERRORLEVEL% == 0 (
+            SET /A COUNT_MODE=1
+            call :setmode
+        )
+        IF %ERRORLEVEL% == 0 (
+            call :enabledisablereposervice ENABLED "infacmd &SET_STATUS_ENABLED_CMD#"
+        )
+        :checkerrorlevel
+              SET ERROR=%ERRORLEVEL%
+        goto :endscript
+
+        :enabledisablereposervice
+              call :getstatus
+              IF %ERRORLEVEL% NEQ 0 EXIT /B %ERRORLEVEL%
+
+              SET REPOSTATUS=%1
+              SET SETSTATUSCMD=%2
+
+              IF "%STATUS%"=="%REPOSTATUS%" (
+                    echo "Repository service is already in the state : %REPOSTATUS%"
+                    EXIT /B 0
+              )
+
+              IF "%REPOSTATUS%"=="ENABLED" (
+                    SET EXECMSG=Request to enable service [&UC4RB_IPC_REPOSITORY#] failed because it is already enabled
+              ) ELSE (
+                    SET EXECMSG=The requested service [&UC4RB_IPC_REPOSITORY#] is not running
+              )
+
+              echo "Setting repository service to %REPOSTATUS% .."
+
+              SET /A COUNT=1
+              :enableonrepeat
+                    for /f "tokens=1 delims=" %%i in ('%SETSTATUSCMD%') do (
+                          set RESULT=%%i
+                          echo "   Command output [%%i]"
+                    )
+
+                    echo "%RESULT%" | find /I "%EXECMSG%" > nul
+                    IF %ERRORLEVEL%  == 0 (
+                          echo "Repository service has been %REPOSTATUS%"
+                          EXIT /B 0
+                    )
+
+                    echo "%RESULT%" | find /I "&SUCCESSFUL_CMD_EXEC#" > nul
+                    IF %ERRORLEVEL%  == 0 (
+                          IF %COUNT% LSS &RECHECK_COUNT# (
+                                echo "Waiting for it to be completed..Will recheck after &RECHECK_INTERVAL# seconds"
+                                ping 127.0.0.1 -n &RECHECK_INTERVAL# -w 1000 > nul
+                                SET /A COUNT=%COUNT%+1
+                                goto :enableonrepeat
+                          ) ELSE (
+                                echo "Unable to change the repository service to $repostatus (timed out)"
+                                EXIT /B 1
+                          )
+                    ) ELSE (
+                          echo "Unable to change the repository service to %REPOSTATUS%"
+                          EXIT /B 1
+                    )
+
+
+        :setmode
+              echo "Setting repository operating mode to &TARGET_MODE#.."
+              for /f "tokens=1 delims=" %%i in ('"infacmd &SET_MODE_CMD#"') do (
+                    set RESULT=%%i
+                    echo "   Command output [%%i]"
+              )
+
+              echo "%RESULT%" | find /I "&SUCCESSFUL_CMD_EXEC#" > nul
+              IF %ERRORLEVEL%  == 0 (
+                    echo "Repository operating mode has been changed to &TARGET_MODE#"
+                    EXIT /B 0
+              )
+
+              echo "%RESULT%" | find /I "Receive interrupted because the underlying session has been closed" > nul
+              IF %ERRORLEVEL%  == 0 (
+                    IF %COUNT_MODE% LSS &RECHECK_COUNT# (
+                          echo "Waiting for it to be completed..Will recheck after &RECHECK_INTERVAL# seconds"
+                          ping 127.0.0.1 -n &RECHECK_INTERVAL# -w 1000 > nul
+                          SET /A COUNT_MODE=%COUNT_MODE%+1
+                          goto :setmode
+                    ) ELSE (
+                          echo "Unable to change the repository mode to &TARGET_MODE# (timed out)"
+                          EXIT /B 1
+                    )
+              ) ELSE (
+                    echo "Unable to change the repository operating mode to &TARGET_MODE#"
+                    EXIT /B 1
+              )
+
+
+        :getstatus
+              echo "Retrieving repository service status.."
+              for /f "tokens=1" %%i in ('"infacmd &GET_STATUS_CMD#"') do (
+                    set STATUS=%%i
+                    goto :end1
+              )
+              :end1
+              echo "   Command output [%STATUS%]"
+
+              IF NOT "Z%STATUS:Enabled=%" == "Z%STATUS%" (
+                    SET STATUS=ENABLED
+                    echo "   Repository status is enabled"
+              ) ELSE IF NOT "Z%STATUS:Disabled=%" == "Z%STATUS%" (
+                    SET STATUS=DISABLED
+                    echo "   Repository status is disabled"
+              ) ELSE (
+                    echo "   Unable to retrieve repository status"
+                    EXIT /B 1
+              )
+              EXIT /B 0
+
+        :endscript
+:   CASE "UNIX"
+        getstatus() {
+              echo "Retrieving repository service status.."
+              status=`./infacmd.sh &GET_STATUS_CMD# | head -n1 | tr -d ' '`
+              error=$?
+              echo "   Command output [$status]"
+
+              if [ "$error" -eq "0" ]
+              then
+                    status=`echo $status | tr [:upper:] [:lower:]`
+                    if [ "$status" = "enabled" ]
+                    then
+                          status=ENABLED
+                          echo "   Repository status is enabled"
+                    elif [ "$status" = "disabled" ]
+                    then
+                          status=DISABLED
+                          echo "   Repository status is disabled"
+                    else
+                          error=1
+                          echo "    Error while retrieving the status"
+                          exit $error
+                    fi
+              else
+                    echo "   Unable to retrieve repository status"
+                    exit $error
+              fi
+        }
+
+        changemode() {
+              echo "Setting repository operating mode to &TARGET_MODE# .."
+              countmode=1
+              while [ true ]
+              do
+                    temp=`./infacmd.sh &SET_MODE_CMD#`
+                    error=$?
+                    echo "   Command output [$temp]"
+
+                    if [ `echo "$temp" | grep "&SUCCESSFUL_CMD_EXEC#" -c -i` -gt "0" ]
+                    then
+                            echo "Repository operating mode has been changed to &TARGET_MODE#"
+                            error=0
+                            break
+                    elif [ `echo "$temp" | grep "Receive interrupted because the underlying session has been closed" -c -i` -gt "0" ]
+                    then
+                            if [ $countmode -lt &RECHECK_COUNT# ]
+                            then
+                                     echo "Waiting for it to be completed..Will recheck after &RECHECK_INTERVAL# seconds"
+                                     sleep &RECHECK_INTERVAL#
+                                     countmode=`expr $countmode + 1`
+                            else
+                                     echo "Unable to change the repository mode to &TARGET_MODE# (timed out)"
+                                     error=1
+                                     exit $error
+                            fi
+                    else
+                          echo "Unable to change the repository operating mode to &TARGET_MODE#"
+                          exit $error
+                    fi
+              done
+        }
+
+        enabledisablereposervice() {
+              repostatus=$1
+              setstatuscmd=$2
+
+              if [ "$repostatus" = "ENABLED" ]
+              then
+                      execresult="Request to enable service .&UC4RB_IPC_REPOSITORY#. failed because it is already enabled"
+              else
+                      execresult="The requested service .&UC4RB_IPC_REPOSITORY#. is not running"
+              fi
+
+              getstatus
+              if [ "$status" != "$repostatus" ]
+              then
+                      echo "Setting repository service to $repostatus .."
+                      count=1
+                      while [ true ]
+                      do
+                              temp=`./infacmd.sh $setstatuscmd`
+                              error=$?
+                              echo "   Command output [$temp]"
+
+                              if [ `echo "$temp" | grep "$execresult" -c -i` -gt "0" ]
+                              then
+                                      echo "Repository service has been $repostatus"
+                                      error=0
+                                      break
+                              elif [ `echo "$temp" | grep "&SUCCESSFUL_CMD_EXEC#" -c -i` -gt "0" ]
+                              then
+                                      if [ $count -lt &RECHECK_COUNT# ]
+                                      then
+                                            echo "Waiting for it to be completed..Will recheck after &RECHECK_INTERVAL# seconds"
+                                            sleep &RECHECK_INTERVAL#
+                                            count=`expr $count + 1`
+                                      else
+                                            echo "Unable to change the repository service to $repostatus (timed out)"
+                                            error=1
+                                            exit $error
+                                      fi
+                              else
+                                      echo "Unable to change the repository service to $repostatus"
+                                      exit $error
+                              fi
+                      done
+              else
+                      echo "Repository service is already in the state : $repostatus"
+              fi
+        }
+
+        echo "Retrieving operating mode.."
+        mode=`./infacmd.sh &GET_MODE_CMD# | head -n1 | tr -d ' '`
+        error=$?
+        echo "   Command output [$mode]"
+
+        if [ "$error" -eq "0" ]
+        then
+              mode=`echo $mode | tr [:upper:] [:lower:]`
+              if [ "$mode" = "normal" ]
+              then
+                    mode=NORMAL
+                    echo "   Current repository operating mode is normal"
+              elif [ "$mode" = "exclusive" ]
+              then
+                    mode=EXCLUSIVE
+                    echo "   Current repository operating mode is exclusive"
+              fi
+        else
+              echo "Unable to retrieve repository operating mode"
+              exit $error
+        fi
+
+        echo UC4RB_IPC_CURRENT_MODE::=$mode
+
+        if [ "$mode" = "&TARGET_MODE#" ]
+        then
+              echo "Current operating mode [$mode] is same as the target operating mode [&TARGET_MODE#]"
+              enabledisablereposervice "ENABLED" "&SET_STATUS_ENABLED_CMD#"
+        else
+              echo "Setting operating mode from $mode to &TARGET_MODE# .."
+              enabledisablereposervice "DISABLED" "&SET_STATUS_DISABLED_CMD#"
+              changemode
+              enabledisablereposervice "ENABLED" "&SET_STATUS_ENABLED_CMD#"
+              echo "Mode has been changed successfully from $mode to &TARGET_MODE#"
+        fi
+
+:   OTHER
+: ENDSWITCH
+
+
+!------------------------------------------ FAILING ACTION IF CHANGE MODE FAILS -----------------------------------------------
+: SET &UC4RB_LOGGING_ERROR# = "******** CHANGE MODE FAILED. ********"
+: INC PCK.AUTOMIC_INFORMATICA_POWERCENTER.PUB.INCLUDE.CHECK_CMD_RETCODE@GENERIC
+
+
+!-------------------------------------------SUCCESS MESSAGE-------------------------------------------------------------------------------
+!Status messages
+: SET &UC4RB_LOGGING_INFO# = "******** CHANGE MODE EXECUTED SUCCESSFULLY ********"
+: INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.INFO
+
+! Sudoer Footer
+: INC PCK.ITPA_SHARED.PUB.INCLUDE.SUDOERS_FOOTER
+]]></MSCRI>
+</SCRIPT>
+<OUTPUTSCAN state="1">
+<Inherit>N</Inherit>
+<filterobjects/>
+<HostFsc/>
+<LoginFsc/>
+</OUTPUTSCAN>
+<POST_SCRIPT mode="1" replacementmode="1" state="1">
+<OSCRI><![CDATA[!Publish the current mode
+:SET &STATUS# = GET_UC_OBJECT_STATUS(,,"RETCODE")
+
+:IF &STATUS# EQ 0
+:SET &HND# = PREP_PROCESS_REPORT("JOBS",, "REP",,"COL=DELIMITER", 'DELIMITER=*::=*')
+:PROCESS &HND#
+:   SET &KEY# = GET_PROCESS_LINE(&HND#,1)
+:   SET &VALUE# = GET_PROCESS_LINE(&HND#,2)
+
+:   IF &KEY# = "UC4RB_IPC_CURRENT_MODE"
+:        SET &UC4RB_IPC_CURRENT_MODE# = "&VALUE#"
+:        PUBLISH &UC4RB_IPC_CURRENT_MODE#,,"WORKFLOW"
+:   ENDIF
+
+:ENDPROCESS
+:CLOSE_PROCESS &HND#
+:ELSE
+:  PSET &UC4RB_IPC_CURRENT_MODE# = ""
+:ENDIF]]></OSCRI>
+</POST_SCRIPT>
+<DOCU_Docu state="1" type="text">
+<DOC/>
+</DOCU_Docu>
+</JOBS_GENERIC>
+</uc-export>
