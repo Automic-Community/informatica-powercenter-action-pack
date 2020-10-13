@@ -16,8 +16,8 @@
  7. Import Object
  8. Restore Repository
  9. Validate Object
- 10.Delete Repository Content
- 11.Execute PMREP Command
+ 10. Delete Repository Content
+ 11. Execute PMREP Command
  
  ###### Compatibility:
  
